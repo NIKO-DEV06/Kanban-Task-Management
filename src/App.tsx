@@ -1,8 +1,17 @@
+import MobileHeader from "./components/MobileHeader";
+import Board from "./components/Board";
+import Header from "./components/Header";
+
+import Sidebar from "./components/Sidebar";
+
 function App() {
   return (
-    <div>
-      <h1 className="text-blue-800 text-8xl">Kanban</h1>
-    </div>
+    <main>
+      <MobileHeader />
+      <Header />
+      <Sidebar />
+      <Board />
+    </main>
   );
 }
 
