@@ -1,16 +1,14 @@
 import MobileHeader from "./components/MobileHeader";
-import Board from "./components/Board";
 import Header from "./components/Header";
 
 import Sidebar from "./components/Sidebar";
 
 function App() {
   return (
-    <main>
+    <main className="bg-[#F4F7FD]">
       <MobileHeader />
       <Header />
       <Sidebar />
-      <Board />
     </main>
   );
 }

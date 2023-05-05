@@ -1,12 +1,14 @@
-// import EmptyBoard from "./EmptyBoard";
+import EmptyBoard from "./EmptyBoard";
+// import KanbanBoard from "./KanbanBoard";
 
 type Props = {};
 
 const Board = ({}: Props) => {
   return (
-    <main className="pt-[8rem] bg-[#F4F7FD] h-screen">
-      {/* <EmptyBoard /> */}
-    </main>
+    <div className="pt-[8rem] h-screen overflow-x-scroll">
+      {/* <KanbanBoard /> */}
+      <EmptyBoard />
+    </div>
   );
 };
 

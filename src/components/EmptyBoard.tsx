@@ -4,7 +4,7 @@ type Props = {};
 
 const EmptyBoard = ({}: Props) => {
   return (
-    <div className="flex flex-col justify-center align-middle items-center translate-y-[14rem] gap-[1.5rem]">
+    <div className="flex flex-col justify-center items-center translate-y-[14rem] gap-[1.5rem]">
       <h1 className="text-center text-[1.5rem] mx-[1rem] font-semibold text-[#828FA3]">
         This board is empty. Create a new column to get started.
       </h1>
