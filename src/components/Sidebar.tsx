@@ -5,7 +5,7 @@ import moon from "../assets/icon-dark-theme.svg";
 import sun from "../assets/icon-light-theme.svg";
 import eye from "../assets/icon-hide-sidebar.svg";
 import { useSelector, useDispatch } from "react-redux";
-import { toggleTheme } from "../store/ThemeSlice";
+import { closeSidebar, toggleTheme } from "../store/ThemeSlice";
 import { RootThemeState } from "../types/types";
 
 import Board from "./Board";
@@ -14,12 +14,22 @@ type Props = {};
 
 const Sidebar = ({}: Props) => {
   const dispatch = useDispatch();
-  const themeState = useSelector((state: RootThemeState) => state.theme);
+  const themeState = useSelector((state: RootThemeState) => state.theme.theme);
+  const sidebarState = useSelector(
+    (state: RootThemeState) => state.theme.sidebar
+  );
+
   return (
     <>
       <div className="flex">
-        <div className="hidden bg-white md:flex flex-col fixed w-[19rem] inset-y-0 overflow-y-auto border-r border-[#E4EBFA] z-10">
-          <p className="uppercase mt-[8rem] text-[#828FA3] tracking-[0.2em] text-[0.85rem] font-[500] ml-[3rem] mb-[1rem]">
+        <div
+          className={`hidden bg-white md:flex flex-col fixed w-[19rem] inset-y-0 overflow-y-auto border-r border-[#E4EBFA] z-10 ${
+            sidebarState
+              ? "transform translate-x-0 transition-all duration-500"
+              : "transform translate-x-[-100%] transition-all duration-500"
+          }`}
+        >
+          <p className="uppercase mt-[8rem] text-[#828FA3] tracking-[0.2em] text-[0.85rem] font-[500] ml-[3rem] mb-[1rem] ">
             All boards (3)
           </p>
           <div className="flex flex-col gap-[0.5rem]">
@@ -56,7 +66,7 @@ const Sidebar = ({}: Props) => {
           </div>
           <div className="flex justify-center items-center gap-[1rem] bg-[#ebeef4] mx-[3rem] py-[0.5rem] rounded-md mt-[18rem] cursor-pointer">
             <img src={moon} alt="sun" />
-            <div
+            <button
               onClick={() => dispatch(toggleTheme())}
               className=" relative w-[3.3rem] h-[1.5rem] bg-[#635FC7] rounded-full"
             >
@@ -66,13 +76,16 @@ const Sidebar = ({}: Props) => {
                   themeState ? "transform translate-x-[-180%]" : ""
                 }`}
               ></div>
-            </div>
+            </button>
             <img src={sun} alt="moon" />
           </div>
-          <div className="flex ml-[3rem] items-center gap-[1rem] mt-[1rem]">
+          <button
+            onClick={() => dispatch(closeSidebar())}
+            className="flex ml-[3rem] items-center gap-[1rem] mt-[1rem]"
+          >
             <img src={eye} className="h-[1.1rem] w-[1.3rem]" alt="hidesvg" />
             <p className="text-[#828FA3] font-[500]">Hide Sidebar</p>
-          </div>
+          </button>
         </div>
         <Board />
       </div>

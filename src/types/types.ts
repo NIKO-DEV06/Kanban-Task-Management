@@ -1,3 +1,6 @@
-export type RootThemeState = {
-  theme: boolean;
-};
+export interface RootThemeState {
+  theme: {
+    theme: boolean;
+    sidebar: boolean;
+  };
+}
