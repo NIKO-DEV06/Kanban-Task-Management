@@ -4,3 +4,8 @@ export interface RootThemeState {
     sidebar: boolean;
   };
 }
+
+export interface ThemeState {
+  theme: boolean;
+  sidebar: boolean;
+}

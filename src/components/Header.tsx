@@ -16,7 +16,7 @@ const Header = ({}: Props) => {
           <h1 className="text-[2rem] font-bold">Kanban</h1>
         </div>
 
-        <h1 className=" text-[1.5rem] font-semibold grid place-items-center translate-x-[-3rem] lg:translate-x-[-11rem] xl:translate-x-[-19rem]">
+        <h1 className="absolute left-[20.5rem] text-[1.5rem] font-semibold grid place-items-center tracking-wide">
           Platform Launch
         </h1>
         <div className="flex gap-[1.5rem]">

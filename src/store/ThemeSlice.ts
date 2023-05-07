@@ -1,9 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-
-interface ThemeState {
-  theme: boolean;
-  sidebar: boolean;
-}
+import { ThemeState } from "../types/types";
 
 const initialState: ThemeState = {
   theme: false,
