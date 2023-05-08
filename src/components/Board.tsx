@@ -1,5 +1,5 @@
-import EmptyBoard from "./EmptyBoard";
-// import KanbanBoard from "./KanbanBoard";
+// import EmptyBoard from "./EmptyBoard";
+import KanbanBoard from "./KanbanBoard";
 import eye from "../assets/icon-show-sidebar.svg";
 import { openSideBar } from "../store/ThemeSlice";
 import { useDispatch } from "react-redux";
@@ -16,8 +16,8 @@ const Board = ({}: Props) => {
       >
         <img src={eye} className="" alt="hidesvg" />
       </button>
-      {/* <KanbanBoard /> */}
-      <EmptyBoard />
+      <KanbanBoard />
+      {/* <EmptyBoard /> */}
     </div>
   );
 };

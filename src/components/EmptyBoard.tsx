@@ -1,6 +1,6 @@
 import add from "../assets/icon-add-task-mobile.svg";
 import { useSelector } from "react-redux";
-import { RootThemeState } from "../types/types";
+import { RootThemeState } from "../interface/interfaces";
 
 type Props = {};
 

@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import data from "../../public/data.json";
 
 const counterSlice = createSlice({
   name: "board",

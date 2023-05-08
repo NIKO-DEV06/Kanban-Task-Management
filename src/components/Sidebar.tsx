@@ -6,7 +6,7 @@ import sun from "../assets/icon-light-theme.svg";
 import eye from "../assets/icon-hide-sidebar.svg";
 import { useSelector, useDispatch } from "react-redux";
 import { closeSidebar, toggleTheme } from "../store/ThemeSlice";
-import { RootThemeState } from "../types/types";
+import { RootThemeState } from "../interface/interfaces";
 
 import Board from "./Board";
 
@@ -81,7 +81,7 @@ const Sidebar = ({}: Props) => {
           </div>
           <button
             onClick={() => dispatch(closeSidebar())}
-            className="flex ml-[3rem] items-center gap-[1rem] mt-[1rem]"
+            className="flex ml-[3rem] items-center gap-[1rem] mt-[1rem] hover:opacity-60 duration-200"
           >
             <img src={eye} className="h-[1.1rem] w-[1.3rem]" alt="hidesvg" />
             <p className="text-[#828FA3] font-[500]">Hide Sidebar</p>

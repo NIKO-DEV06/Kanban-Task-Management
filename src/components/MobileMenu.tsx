@@ -6,7 +6,7 @@ import sun from "../assets/icon-light-theme.svg";
 
 import { useSelector, useDispatch } from "react-redux";
 import { openSideBar, toggleTheme } from "../store/ThemeSlice";
-import { RootThemeState } from "../types/types";
+import { RootThemeState } from "../interface/interfaces";
 
 type Props = {};
 

@@ -5,7 +5,7 @@ import options from "../assets/icon-vertical-ellipsis.svg";
 import MobileMenu from "./MobileMenu";
 import { useSelector, useDispatch } from "react-redux";
 import { closeSidebar } from "../store/ThemeSlice";
-import { RootThemeState } from "../types/types";
+import { RootThemeState } from "../interface/interfaces";
 
 type Props = {};
 
