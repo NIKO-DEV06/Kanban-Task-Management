@@ -5,7 +5,7 @@ import moon from "../assets/icon-dark-theme.svg";
 import sun from "../assets/icon-light-theme.svg";
 
 import { useSelector, useDispatch } from "react-redux";
-import { openSideBar, toggleTheme } from "../store/ThemeSlice";
+import { closeMobileMenu, toggleTheme } from "../store/ThemeSlice";
 import { RootThemeState } from "../interface/interfaces";
 
 type Props = {};
@@ -65,7 +65,7 @@ const MobileMenu = ({}: Props) => {
         </div>
       </div>
       <div
-        onClick={() => dispatch(openSideBar())}
+        onClick={() => dispatch(closeMobileMenu())}
         className="fixed bg-black opacity-50 inset-0"
       ></div>
     </>

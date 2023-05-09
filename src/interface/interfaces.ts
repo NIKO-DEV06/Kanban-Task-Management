@@ -1,13 +1,17 @@
+import store from "../store/store";
+
 export interface RootThemeState {
   theme: {
     theme: boolean;
     sidebar: boolean;
+    mobileMenu: boolean;
   };
 }
 
 export interface ThemeState {
   theme: boolean;
   sidebar: boolean;
+  mobileMenu: boolean;
 }
 
 export interface Board {
@@ -34,3 +38,5 @@ export interface Subtask {
   title: string;
   isCompleted: boolean;
 }
+
+export type State = ReturnType<typeof store.getState>;

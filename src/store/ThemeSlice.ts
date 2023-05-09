@@ -4,6 +4,7 @@ import { ThemeState } from "../interface/interfaces";
 const initialState: ThemeState = {
   theme: false,
   sidebar: true,
+  mobileMenu: false,
 };
 
 const themeSlice = createSlice({
@@ -19,8 +20,20 @@ const themeSlice = createSlice({
     closeSidebar: (state) => {
       state.sidebar = false;
     },
+    openMobileMenu: (state) => {
+      state.mobileMenu = true;
+    },
+    closeMobileMenu: (state) => {
+      state.mobileMenu = false;
+    },
   },
 });
 
-export const { toggleTheme, openSideBar, closeSidebar } = themeSlice.actions;
+export const {
+  toggleTheme,
+  openSideBar,
+  closeSidebar,
+  openMobileMenu,
+  closeMobileMenu,
+} = themeSlice.actions;
 export default themeSlice.reducer;

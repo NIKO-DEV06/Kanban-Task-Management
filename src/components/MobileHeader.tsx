@@ -4,7 +4,7 @@ import add from "../assets/icon-add-task-mobile.svg";
 import options from "../assets/icon-vertical-ellipsis.svg";
 import MobileMenu from "./MobileMenu";
 import { useSelector, useDispatch } from "react-redux";
-import { closeSidebar } from "../store/ThemeSlice";
+import { openMobileMenu } from "../store/ThemeSlice";
 import { RootThemeState } from "../interface/interfaces";
 
 type Props = {};
@@ -13,20 +13,20 @@ const MobileHeader = ({}: Props) => {
   const dispatch = useDispatch();
 
   const sidebarState = useSelector(
-    (state: RootThemeState) => state.theme.sidebar
+    (state: RootThemeState) => state.theme.mobileMenu
   );
   return (
     <header className="fixed z-30 flex justify-between items-center w-full h-[6rem] p-[1.5rem] md:hidden bg-white border-b border-[#E4EBFA]">
       <div className="flex gap-[1rem] items-center">
         <img src={logoLight} alt="logo" className="h-[1.6rem]" />
         <h1
-          onClick={() => dispatch(closeSidebar())}
+          onClick={() => dispatch(openMobileMenu())}
           className="text-[1.5rem] font-semibold"
         >
           Platform Launch
         </h1>
         <img
-          onClick={() => dispatch(closeSidebar())}
+          onClick={() => dispatch(openMobileMenu())}
           src={dropDown}
           alt="dropdown"
           className="h-[0.5rem]"
@@ -40,7 +40,7 @@ const MobileHeader = ({}: Props) => {
           <img src={options} alt="ellipsis" className="translate-y-[0.3rem]" />
         </div>
       </div>
-      {!sidebarState && <MobileMenu />}
+      {sidebarState && <MobileMenu />}
     </header>
   );
 };
