@@ -8,31 +8,36 @@ const KanbanBoard = ({}: Props) => {
     (state: RootThemeState) => state.theme.sidebar
   );
   const boardState = useSelector((state: State) => state.board);
+
   console.log(boardState);
 
   return (
     <div
       className={` ${
         sidebarState
-          ? "pl-[1.5rem] md:pl-[20.5rem]"
-          : "pl-[1.5rem] md:pl-[3rem]"
+          ? "pl-[1.5rem] md:pl-[20.5rem] pb-[1rem]"
+          : "pl-[1.5rem] md:pl-[3rem] pb-[1rem]"
       } overflow-visible`}
     >
       <div className="flex gap-[2rem]">
-        <div>
-          <div className="flex items-center gap-[0.7rem]">
-            <div className="w-[1rem] h-[1rem] rounded-full bg-[#49C4E5]"></div>
-            <h1 className="text-[#828FA3] tracking-[0.2em] uppercase font-medium">
-              Todo (4)
-            </h1>
+        {/* COL */}
+        {boardState[0].columns.map((column) => (
+          <div className="col">
+            <div className="flex items-center gap-[0.7rem]">
+              <div className="w-[1rem] h-[1rem] rounded-full bg-[#49C4E5]"></div>
+              <h1 className="text-[#828FA3] tracking-[0.2em] uppercase font-medium">
+                {`${column.name} (${column.tasks.length})`}
+              </h1>
+            </div>
+            {/* TASK */}
+            {column.tasks.map((task) => (
+              <div className="bg-white px-[1.7rem] py-[1.5rem] w-[20rem] flex flex-col gap-[0.3rem] mt-[1rem] rounded-lg shadow-input-shadow hover:opacity-60 duration-200">
+                <p className="font-semibold text-[1.2rem]">{task.title}</p>
+                <p className="text-[#828FA3] font-medium">0 of 3 substasks</p>
+              </div>
+            ))}
           </div>
-          <div className="bg-white px-[1.7rem] py-[1.5rem] w-[20rem] flex flex-col gap-[0.3rem] mt-[1rem] rounded-lg shadow-input-shadow">
-            <p className="font-semibold text-[1.2rem]">
-              Build UI for onboarding flow
-            </p>
-            <p className="text-[#828FA3] font-medium">0 of 3 substasks</p>
-          </div>
-        </div>
+        ))}
       </div>
     </div>
   );
