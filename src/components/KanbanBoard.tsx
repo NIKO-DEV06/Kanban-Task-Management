@@ -1,4 +1,4 @@
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { RootThemeState, State } from "../interface/interfaces";
 
 type Props = {};
@@ -7,8 +7,11 @@ const KanbanBoard = ({}: Props) => {
   const sidebarState = useSelector(
     (state: RootThemeState) => state.theme.sidebar
   );
-  const boardState = useSelector((state: State) => state.board);
-
+  const boardState = useSelector((state: State) => state.board.boards);
+  const activeBoardIndex = useSelector(
+    (state: State) => state.board.activeBoardIndex
+  );
+  console.log(activeBoardIndex);
   console.log(boardState);
 
   return (
@@ -17,12 +20,12 @@ const KanbanBoard = ({}: Props) => {
         sidebarState
           ? "pl-[1.5rem] md:pl-[20.5rem] pb-[1rem]"
           : "pl-[1.5rem] md:pl-[3rem] pb-[1rem]"
-      } overflow-visible`}
+      } overflow-visible flex`}
     >
-      <div className="flex gap-[2rem]">
+      <div className="flex pr-[2rem]">
         {/* COL */}
-        {boardState[0].columns.map((column) => (
-          <div className="col">
+        {boardState[activeBoardIndex].columns.map((column) => (
+          <div key={column.id} className="col pr-[2rem]">
             <div className="flex items-center gap-[0.7rem]">
               <div className="w-[1rem] h-[1rem] rounded-full bg-[#49C4E5]"></div>
               <h1 className="text-[#828FA3] tracking-[0.2em] uppercase font-medium">
@@ -30,14 +33,25 @@ const KanbanBoard = ({}: Props) => {
               </h1>
             </div>
             {/* TASK */}
+            {column.tasks.length === 0 && (
+              <div className="border-[#828fa3] border-2 border-dashed h-[33rem] w-[18rem] rounded-lg mt-[1rem] grid place-items-center group cursor-pointer"></div>
+            )}
             {column.tasks.map((task) => (
-              <div className="bg-white px-[1.7rem] py-[1.5rem] w-[20rem] flex flex-col gap-[0.3rem] mt-[1rem] rounded-lg shadow-input-shadow hover:opacity-60 duration-200">
+              <div
+                key={task.id}
+                className="bg-white px-[1.7rem] py-[1.5rem] w-[20rem] flex flex-col gap-[0.3rem] mt-[1rem] rounded-lg shadow-input-shadow hover:opacity-60 duration-200"
+              >
                 <p className="font-semibold text-[1.2rem]">{task.title}</p>
-                <p className="text-[#828FA3] font-medium">0 of 3 substasks</p>
+                <p className="text-[#828FA3] font-medium">{`0 of ${task.subtasks.length} substasks`}</p>
               </div>
             ))}
           </div>
         ))}
+        <div className="bg-[#828fa332] h-[33rem] w-[18rem] rounded-lg mt-[2.5rem] grid place-items-center group cursor-pointer">
+          <p className="text-[#828FA3] text-[1.4rem] font-semibold group-hover:text-[#635FC7] duration-200">
+            + New Column
+          </p>
+        </div>
       </div>
     </div>
   );

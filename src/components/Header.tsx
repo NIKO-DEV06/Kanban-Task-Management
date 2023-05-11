@@ -1,11 +1,16 @@
 import logoLight from "../assets/logo-mobile.svg";
 
+import { useState } from "react";
 import add from "../assets/icon-add-task-mobile.svg";
 import options from "../assets/icon-vertical-ellipsis.svg";
 
 type Props = {};
 
 const Header = ({}: Props) => {
+  const [editDeleteModal, setEditDeleteModal] = useState(false);
+  const toggleEditDelete = () => {
+    setEditDeleteModal(!editDeleteModal);
+  };
   return (
     <>
       <header className="fixed md:flex justify-between items-center w-full h-[6rem] p-[1.5rem] hidden bg-white border-b border-[#E4EBFA] px-[3rem] z-20">
@@ -26,9 +31,28 @@ const Header = ({}: Props) => {
             </div>
             <p className="text-white font-semibold">Add New Task</p>
           </button>
-          <div className="grid place-items-center cursor-pointer">
+          <div
+            onClick={toggleEditDelete}
+            className="grid place-items-center cursor-pointer"
+          >
             <img src={options} alt="ellipsis" />
           </div>
+          {editDeleteModal && (
+            <div className="absolute bg-white w-[12rem] top-[5.5rem] pl-[1rem] py-[1rem] flex flex-col gap-[1rem] rounded-lg shadow-input-shadow">
+              <p
+                onClick={() => setEditDeleteModal(false)}
+                className="text-[#828FA3] cursor-pointer"
+              >
+                Edit Board
+              </p>
+              <p
+                onClick={() => setEditDeleteModal(false)}
+                className="text-[#EA5555] cursor-pointer"
+              >
+                Delete Board
+              </p>
+            </div>
+          )}
         </div>
       </header>
     </>

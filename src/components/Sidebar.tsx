@@ -7,8 +7,10 @@ import eye from "../assets/icon-hide-sidebar.svg";
 import { useSelector, useDispatch } from "react-redux";
 import { closeSidebar, toggleTheme } from "../store/ThemeSlice";
 import { RootThemeState } from "../interface/interfaces";
+import { State } from "../interface/interfaces";
 
 import Board from "./Board";
+import { setActiveBoard } from "../store/BoardSlice";
 
 type Props = {};
 
@@ -18,6 +20,7 @@ const Sidebar = ({}: Props) => {
   const sidebarState = useSelector(
     (state: RootThemeState) => state.theme.sidebar
   );
+  const boardState = useSelector((state: State) => state.board.boards);
 
   return (
     <>
@@ -33,16 +36,22 @@ const Sidebar = ({}: Props) => {
             All boards (3)
           </p>
           <div className="flex flex-col gap-[0.5rem]">
-            <div className="flex gap-[1rem] items-center bg-[#635FC7] pl-[3rem] py-[0.8rem] rounded-r-full w-[17rem] cursor-pointer">
-              <img
-                src={board}
-                alt="boardSvg"
-                className=" w-[1.2rem] h-[1.2rem] filter brightness-0 invert"
-              />
-              <p className="text-white font-semibold">Platform Launch</p>
-            </div>
+            {boardState.map((bName, index) => (
+              <div
+                key={bName.id}
+                onClick={() => dispatch(setActiveBoard(index))}
+                className="flex gap-[1rem] items-center bg-[#635FC7] pl-[3rem] py-[0.8rem] rounded-r-full w-[17rem] cursor-pointer"
+              >
+                <img
+                  src={board}
+                  alt="boardSvg"
+                  className=" w-[1.2rem] h-[1.2rem] filter brightness-0 invert"
+                />
+                <p className="text-white font-semibold">{bName.name}</p>
+              </div>
+            ))}
             {/* divi */}
-            <div className="group flex gap-[1rem] items-center bg-white hover:bg-[#A8A4FF] pl-[3rem] py-[0.8rem] rounded-r-full w-[17rem] duration-200 ">
+            {/* <div className="group flex gap-[1rem] items-center bg-white hover:bg-[#A8A4FF] pl-[3rem] py-[0.8rem] rounded-r-full w-[17rem] duration-200 ">
               <img
                 src={board}
                 alt="boardSvg"
@@ -51,7 +60,7 @@ const Sidebar = ({}: Props) => {
               <p className="text-[#828FA3] group-hover:text-white duration-200 font-semibold">
                 Marketing Plan
               </p>
-            </div>
+            </div> */}
           </div>
           <div className="flex ml-[3rem] gap-[1rem] mt-[1.5rem] hover:opacity-70 duration-200 cursor-pointer">
             <img

@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import data from "../../public/data.json";
 import { Board } from "../interface/interfaces";
 
@@ -25,11 +25,20 @@ const initialBoardState: Board[] = data.boards.map((board) => {
   };
 });
 
+const initialState = {
+  boards: initialBoardState,
+  activeBoardIndex: 0,
+};
+
 const boardSlice = createSlice({
   name: "board",
-  initialState: initialBoardState,
-  reducers: {},
+  initialState,
+  reducers: {
+    setActiveBoard: (state, action: PayloadAction<number>) => {
+      state.activeBoardIndex = action.payload;
+    },
+  },
 });
 
-export const {} = boardSlice.actions;
+export const { setActiveBoard } = boardSlice.actions;
 export default boardSlice.reducer;
