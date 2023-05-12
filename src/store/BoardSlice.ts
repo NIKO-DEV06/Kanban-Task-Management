@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import data from "../../public/data.json";
-import { Board } from "../interface/interfaces";
+import { Board, RootState } from "../interface/interfaces";
+import { findTask } from "../helpers/helpers";
 
 let currentId = 0;
 
@@ -25,9 +26,10 @@ const initialBoardState: Board[] = data.boards.map((board) => {
   };
 });
 
-const initialState = {
+const initialState: RootState = {
   boards: initialBoardState,
   activeBoardIndex: 0,
+  activeTask: null,
 };
 
 const boardSlice = createSlice({
@@ -37,8 +39,20 @@ const boardSlice = createSlice({
     setActiveBoard: (state, action: PayloadAction<number>) => {
       state.activeBoardIndex = action.payload;
     },
+    // addBoard: (state, action: PayloadAction<Board>) => {
+    //   return [...state.boards, action.payload];
+    // },
+    viewTask: (state, action: PayloadAction<number>) => {
+      const { boards, activeBoardIndex } = state;
+      const activeTaskId = action.payload;
+      // Find the task in the active board
+      const activeBoard = boards[activeBoardIndex];
+      const task = findTask(activeBoard.columns, activeTaskId);
+      // Update the active task in the state
+      state.activeTask = task;
+    },
   },
 });
 
-export const { setActiveBoard } = boardSlice.actions;
+export const { setActiveBoard, viewTask } = boardSlice.actions;
 export default boardSlice.reducer;

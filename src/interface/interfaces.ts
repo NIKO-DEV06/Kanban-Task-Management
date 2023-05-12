@@ -1,23 +1,24 @@
 import store from "../store/store";
 
 export interface RootThemeState {
-  theme: {
-    theme: boolean;
-    sidebar: boolean;
-    mobileMenu: boolean;
-  };
+  theme: ThemeState;
 }
 
 export interface ThemeState {
   theme: boolean;
   sidebar: boolean;
   mobileMenu: boolean;
+  viewTask: boolean;
+}
+export interface RootState {
+  boards: Board[];
+  activeBoardIndex: number;
+  activeTask?: Task | null;
 }
 
 export interface Board {
   id: number;
   name: string;
-
   columns: Column[];
 }
 

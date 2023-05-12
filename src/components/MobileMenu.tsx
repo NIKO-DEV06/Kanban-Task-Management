@@ -6,40 +6,58 @@ import sun from "../assets/icon-light-theme.svg";
 
 import { useSelector, useDispatch } from "react-redux";
 import { closeMobileMenu, toggleTheme } from "../store/ThemeSlice";
-import { RootThemeState } from "../interface/interfaces";
+import { setActiveBoard } from "../store/BoardSlice";
+import { RootThemeState, State } from "../interface/interfaces";
 
 type Props = {};
 
 const MobileMenu = ({}: Props) => {
   const dispatch = useDispatch();
   const themeState = useSelector((state: RootThemeState) => state.theme.theme);
+  const boardState = useSelector((state: State) => state.board.boards);
+  const activeBoardIndex = useSelector(
+    (state: State) => state.board.activeBoardIndex
+  );
 
   return (
     <>
       <div className="fixed bg-white z-40 mt-[27rem] pb-[1.5rem] rounded-lg pr-[1.5rem] translate-x-[15%]">
         <p className="uppercase mt-[1rem] text-[#828FA3] tracking-[0.2em] text-[0.85rem] font-[500] ml-[3rem] mb-[1rem] ">
-          All boards (3)
+          {`All boards (${boardState.length})`}
         </p>
         <div className="flex flex-col gap-[0.5rem]">
-          <div className="flex gap-[1rem] items-center bg-[#635FC7] pl-[3rem] py-[0.8rem] rounded-r-full w-[17rem] cursor-pointer">
-            <img
-              src={board}
-              alt="boardSvg"
-              className=" w-[1.2rem] h-[1.2rem] filter brightness-0 invert"
-            />
-            <p className="text-white font-semibold">Platform Launch</p>
-          </div>
-          {/* divi */}
-          <div className="flex gap-[1rem] items-center bg-white pl-[3rem] py-[0.8rem] rounded-r-full w-[17rem] duration-200 ">
-            <img
-              src={board}
-              alt="boardSvg"
-              className=" w-[1.2rem] h-[1.2rem]"
-            />
-            <p className="text-[#828FA3] duration-200 font-semibold">
-              Marketing Plan
-            </p>
-          </div>
+          {boardState.map((bName, index) => (
+            <div
+              onClick={() => {
+                dispatch(setActiveBoard(index));
+                dispatch(closeMobileMenu());
+              }}
+              className={
+                activeBoardIndex === index
+                  ? "flex gap-[1rem] items-center bg-[#635FC7] pl-[3rem] py-[0.8rem] rounded-r-full w-[17rem] cursor-pointer"
+                  : "flex gap-[1rem] items-center bg-white pl-[3rem] py-[0.8rem] rounded-r-full w-[17rem] duration-200 "
+              }
+            >
+              <img
+                src={board}
+                alt="boardSvg"
+                className={
+                  activeBoardIndex === index
+                    ? "w-[1.2rem] h-[1.2rem] filter brightness-0 invert"
+                    : "w-[1.2rem] h-[1.2rem]"
+                }
+              />
+              <p
+                className={
+                  activeBoardIndex === index
+                    ? "text-white font-semibold"
+                    : "text-[#828FA3] duration-200 font-semibold"
+                }
+              >
+                {bName.name}
+              </p>
+            </div>
+          ))}
         </div>
         <div className="flex ml-[3rem] gap-[1rem] mt-[1.5rem] hover:opacity-70 duration-200 cursor-pointer">
           <img src={pboard} className="w-[1.2rem] h-[1.2rem]" alt="board svg" />

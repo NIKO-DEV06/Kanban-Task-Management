@@ -5,6 +5,7 @@ const initialState: ThemeState = {
   theme: false,
   sidebar: true,
   mobileMenu: false,
+  viewTask: false,
 };
 
 const themeSlice = createSlice({
@@ -26,6 +27,12 @@ const themeSlice = createSlice({
     closeMobileMenu: (state) => {
       state.mobileMenu = false;
     },
+    openViewTaskModal: (state) => {
+      state.viewTask = true;
+    },
+    closeViewTaskModal: (state) => {
+      state.viewTask = false;
+    },
   },
 });
 
@@ -35,5 +42,7 @@ export const {
   closeSidebar,
   openMobileMenu,
   closeMobileMenu,
+  openViewTaskModal,
+  closeViewTaskModal,
 } = themeSlice.actions;
 export default themeSlice.reducer;
