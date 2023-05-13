@@ -19,7 +19,6 @@ const KanbanBoard = ({}: Props) => {
   const viewTaskIsVisble = useSelector(
     (state: RootThemeState) => state.theme.viewTask
   );
-  const activeTask = useSelector((state: State) => state.board.activeTask);
 
   console.log(boardState);
 
