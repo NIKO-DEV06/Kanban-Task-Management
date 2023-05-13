@@ -13,6 +13,7 @@ export interface ThemeState {
 export interface RootState {
   boards: Board[];
   activeBoardIndex: number;
+  activeColumn?: number | string | null;
   activeTask?: Task | null;
 }
 

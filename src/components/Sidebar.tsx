@@ -35,7 +35,7 @@ const Sidebar = ({}: Props) => {
               : "transform translate-x-[-100%] transition-all duration-500"
           }`}
         >
-          <p className="uppercase mt-[8rem] text-[#828FA3] tracking-[0.2em] text-[0.85rem] font-[500] ml-[3rem] mb-[1rem] ">
+          <p className="uppercase mt-[7.5rem] text-[#828FA3] tracking-[0.2em] text-[0.85rem] font-[500] ml-[3rem] mb-[1rem] ">
             {`All boards (${boardState.length})`}
           </p>
           <div className="flex flex-col gap-[0.5rem]">

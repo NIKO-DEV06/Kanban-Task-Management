@@ -33,7 +33,7 @@ const Header = ({}: Props) => {
           </button>
           <div
             onClick={toggleEditDelete}
-            className="grid place-items-center cursor-pointer"
+            className="hover:bg-[#828fa349] w-[1.2rem] h-[2.5rem] grid place-items-center translate-y-1 rounded-t-full rounded-b-full duration-200 cursor-pointer"
           >
             <img src={options} alt="ellipsis" />
           </div>
