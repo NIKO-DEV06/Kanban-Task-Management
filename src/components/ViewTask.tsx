@@ -54,7 +54,9 @@ const ViewTask = ({}: Props) => {
     <>
       <div
         className={`fixed z-30 w-screen flex justify-center  ${
-          sidebarState ? "md:translate-x-[-20rem]" : "translate-x-[-1.5rem]"
+          sidebarState
+            ? "md:translate-x-[-20rem] translate-x-[-1.5rem]"
+            : "translate-x-[-1.5rem]"
         }`}
       >
         <div className="bg-white fixed w-[25rem] md:w-[30rem] pt-[2rem] pb-[2.5rem] rounded-lg z-30 translate-x[-0.5rem]">
@@ -115,11 +117,11 @@ const ViewTask = ({}: Props) => {
             ))}
           </div>
 
-          <p className="font-semibold text-[#828FA3] ml-[1.5rem] mt-[1.1rem]">
+          <p className="font-semibold text-[#828FA3] ml-[2.5rem] md:ml-[1.5rem] mt-[1.1rem]">
             Current Status
           </p>
-          <div className="relative">
-            <div className="appearance-none bg-white flex items-center border-2 mx-[1.5rem] w-[27rem] border-[#625fc758] text-[1.1rem] rounded-lg mt-[0.7rem] px-[1rem] py-[0.7rem] justify-center font-semibold">
+          <div className="relative w-full grid place-items-center md:place-items-start">
+            <div className="appearance-none bg-white flex items-center border-2 mx-[1.5rem] w-[20rem] md:w-[27rem] border-[#625fc758] text-[1.1rem] rounded-lg mt-[0.7rem] px-[1rem] py-[0.7rem] justify-center font-semibold">
               {
                 boardState[activeBoardIndex].columns.find(
                   (col) => col.id === activeColumnId
