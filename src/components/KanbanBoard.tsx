@@ -4,6 +4,7 @@ import { generateRandomColor } from "../helpers/helpers";
 import { viewTask, setActiveColumn } from "../store/BoardSlice";
 import { openViewTaskModal } from "../store/ThemeSlice";
 import ViewTask from "./ViewTask";
+// import AddTask from "./AddTask";
 
 type Props = {};
 
@@ -34,15 +35,13 @@ const KanbanBoard = ({}: Props) => {
         <div className="flex pr-[2rem]">
           {/* COL */}
           {boardState[activeBoardIndex].columns.map((column) => {
-            const color = generateRandomColor();
             const colId = column.id;
-
             return (
               <div key={column.id} className="col pr-[2rem]">
                 <div className="flex items-center gap-[0.7rem]">
                   <div
-                    className={`w-[1rem] h-[1rem] rounded-full bg[#49C4E5]`}
-                    style={{ backgroundColor: color }}
+                    className={`w-[1rem] h-[1rem] rounded-full`}
+                    style={{ backgroundColor: generateRandomColor() }}
                   ></div>
                   <h1 className="text-[#828FA3] tracking-[0.2em] uppercase font-medium">
                     {`${column.name} (${column.tasks.length})`}
@@ -82,6 +81,7 @@ const KanbanBoard = ({}: Props) => {
           </div>
         </div>
         {viewTaskIsVisble && <ViewTask />}
+        {/* <AddTask /> */}
       </div>
     </>
   );

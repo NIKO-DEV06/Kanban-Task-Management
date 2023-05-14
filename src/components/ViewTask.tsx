@@ -53,13 +53,13 @@ const ViewTask = ({}: Props) => {
   return (
     <>
       <div
-        className={`fixed z-30 w-screen flex justify-center  ${
+        className={`fixed md:absolute z-30 w-screen flex justify-center  ${
           sidebarState
             ? "md:translate-x-[-20rem] translate-x-[-1.5rem]"
             : "translate-x-[-1.5rem]"
         }`}
       >
-        <div className="bg-white fixed w-[25rem] md:w-[30rem] pt-[2rem] pb-[2.5rem] rounded-lg z-30 translate-x[-0.5rem]">
+        <div className="bg-white fixed md:absolute w-[25rem] md:w-[30rem] pt-[2rem] pb-[2.5rem] rounded-lg z-30 overflow-scroll">
           <div className="flex justify-between mx-[1.5rem] items-center gap-[1rem]">
             <h2 className="font-bold text-[1.2rem]">{activeTask?.title}</h2>
             <div
