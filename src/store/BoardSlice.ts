@@ -79,9 +79,21 @@ const boardSlice = createSlice({
         state.activeTask = updatedTask;
       }
     },
+    addTask: (state, action: PayloadAction<Task>) => {
+      // Find the active column
+      const activeColumn = state.boards[state.activeBoardIndex].columns[0];
+
+      // Add the new task to the active column
+      activeColumn.tasks.push(action.payload);
+    },
   },
 });
 
-export const { setActiveBoard, setActiveColumn, viewTask, updateTask } =
-  boardSlice.actions;
+export const {
+  setActiveBoard,
+  setActiveColumn,
+  viewTask,
+  updateTask,
+  addTask,
+} = boardSlice.actions;
 export default boardSlice.reducer;

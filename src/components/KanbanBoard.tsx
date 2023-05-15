@@ -4,7 +4,7 @@ import { generateRandomColor } from "../helpers/helpers";
 import { viewTask, setActiveColumn } from "../store/BoardSlice";
 import { openViewTaskModal } from "../store/ThemeSlice";
 import ViewTask from "./ViewTask";
-// import AddTask from "./AddTask";
+import AddTask from "./AddTask";
 
 type Props = {};
 
@@ -81,7 +81,7 @@ const KanbanBoard = ({}: Props) => {
           </div>
         </div>
         {viewTaskIsVisble && <ViewTask />}
-        {/* <AddTask /> */}
+        <AddTask />
       </div>
     </>
   );

@@ -1,7 +1,10 @@
+import { useState } from "react";
 import { useSelector } from "react-redux";
 import { RootThemeState } from "../interface/interfaces";
 import xSvg from "../assets/icon-cross.svg";
 import add from "../assets/purple-add.svg";
+import drop from "../assets/icon-chevron-down.svg";
+import { State } from "../interface/interfaces";
 
 type Props = {};
 
@@ -9,16 +12,38 @@ const AddTask = ({}: Props) => {
   const sidebarState = useSelector(
     (state: RootThemeState) => state.theme.sidebar
   );
+  const boardState = useSelector((state: State) => state.board.boards);
+  const activeBoardIndex = useSelector(
+    (state: State) => state.board.activeBoardIndex
+  );
+  const [subtasks, setSubtasks] = useState<string[]>([]);
+
+  const addSubtask = () => {
+    setSubtasks([...subtasks, ""]);
+  };
+
+  const removeSubtask = (index: number) => {
+    const updatedSubtasks = [...subtasks];
+    updatedSubtasks.splice(index, 1);
+    setSubtasks(updatedSubtasks);
+  };
+
+  const handleSubtaskChange = (index: number, value: string) => {
+    const updatedSubtasks = [...subtasks];
+    updatedSubtasks[index] = value;
+    setSubtasks(updatedSubtasks);
+  };
+
   return (
-    <>
+    <div className="hidden">
       <div
-        className={`fixed md:absolute z-30 w-screen flex justify-center  ${
+        className={`fixed md:absolute z-30 w-screen flex justify-center translate-y-[-4.5rem] md:translate-y-[-6.3rem]  ${
           sidebarState
             ? "md:translate-x-[-20rem] translate-x-[-1.5rem]"
             : "translate-x-[-1.5rem]"
         }`}
       >
-        <div className="bg-white fixed md:absolute w-[25rem] md:w-[30rem] pt-[2rem] pb-[1rem] rounded-lg z-30 overflow-scroll px-[1.65rem]">
+        <form className="bg-white fixed md:absolute w-[25rem] md:w-[30rem] pt-[2rem] pb-[1rem] rounded-lg z-30 overflow-scroll px-[1.65rem] h-[42rem]">
           <h1 className="font-semibold text-[1.4rem]">Add New Task</h1>
           <div className="flex flex-col gap-[1.5rem]">
             <div>
@@ -36,7 +61,7 @@ const AddTask = ({}: Props) => {
                 Description
               </p>
               <textarea
-                name="message"
+                name="description"
                 cols={30}
                 rows={10}
                 autoComplete="off"
@@ -48,30 +73,71 @@ const AddTask = ({}: Props) => {
               <p className="text-[#828FA3] text-[1.1rem] font-[500] mb-[0.5rem]">
                 Subtasks
               </p>
-              <div>
-                <div className="flex justify-between gap-[1rem] items-center">
-                  <input
-                    type="text"
-                    placeholder=""
-                    className="outline-none border-[2px] border-[#00011241] focus:border-[#635FC7] indent-4 h-[3rem] w-full rounded-md appearance-none text-[0.95rem]"
-                  />
-                  <img
-                    src={xSvg}
-                    alt=""
-                    className="w-[1.5rem] h-[1.5rem] cursor-pointer"
-                  />
-                </div>
+              <div className="max-h-[8rem] overflow-scroll flex flex-col gap-[0.5rem]">
+                {subtasks.map((subtask, index) => (
+                  <div
+                    key={index}
+                    className="flex justify-between gap-[1rem] items-center"
+                  >
+                    <input
+                      type="text"
+                      placeholder=""
+                      className="outline-none border-[2px] border-[#00011241] focus:border-[#635FC7] indent-4 h-[3rem] w-full rounded-md appearance-none text-[0.95rem]"
+                      onChange={(e) =>
+                        handleSubtaskChange(index, e.target.value)
+                      }
+                      value={subtask}
+                    />
+                    <img
+                      src={xSvg}
+                      alt=""
+                      className="w-[1.3rem] h-[1.3rem] cursor-pointer"
+                      onClick={() => removeSubtask(index)}
+                    />
+                  </div>
+                ))}
               </div>
             </div>
           </div>
-          <div className="bg-[#625fc72a] flex justify-center rounded-full py-[0.9rem] mt-[1rem] gap-[0.5rem]">
-            <img src={add} alt="addSvg" />
+          <div
+            onClick={addSubtask}
+            className="bg-[#625fc72a] flex justify-center rounded-full py-[0.9rem] mt-[1rem] gap-[0.5rem] items-center cursor-pointer"
+          >
+            <img src={add} alt="addSvg" className="h-[0.65rem] w-[0.65rem]" />
             <p className="text-[#635FC7] font-semibold">Add New Subtask</p>
           </div>
-        </div>
+          <div className="mt-[1.5rem]">
+            <p className="text-[#828FA3] text-[1.1rem] font-[500] mb-[0.5rem]">
+              Status
+            </p>
+
+            <div className="relative">
+              <select
+                id="dropdown"
+                name="services"
+                className="cursor-pointer bg-white font-[500] text-[#656161] w-full border-2 outline-none py-3 px-[1.5rem] appearance-none rounded-md"
+              >
+                {boardState[activeBoardIndex].columns.map((col) => (
+                  <option key={col.id} value="Sales-and-Distribution">
+                    {col.name}
+                  </option>
+                ))}
+              </select>
+              <img
+                src={drop}
+                alt=""
+                className="absolute right-[1.2rem] top-[50%] scale-[1.5]"
+              />
+            </div>
+
+            <button className="bg-[#635FC7] flex justify-center rounded-full py-[0.9rem] mt-[1rem] gap-[0.5rem] items-center w-full">
+              <p className="text-white font-semibold">Create Task</p>
+            </button>
+          </div>
+        </form>
       </div>
       <div className="fixed inset-0 bg-black z-20 opacity-50"></div>
-    </>
+    </div>
   );
 };
 
