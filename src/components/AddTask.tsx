@@ -1,14 +1,16 @@
-import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useState, FormEvent } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { RootThemeState } from "../interface/interfaces";
 import xSvg from "../assets/icon-cross.svg";
 import add from "../assets/purple-add.svg";
 import drop from "../assets/icon-chevron-down.svg";
 import { State } from "../interface/interfaces";
+import { addTask } from "../store/BoardSlice";
 
 type Props = {};
 
 const AddTask = ({}: Props) => {
+  const dispatch = useDispatch();
   const sidebarState = useSelector(
     (state: RootThemeState) => state.theme.sidebar
   );
@@ -16,7 +18,17 @@ const AddTask = ({}: Props) => {
   const activeBoardIndex = useSelector(
     (state: State) => state.board.activeBoardIndex
   );
+
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [status, setStatus] = useState(
+    boardState[activeBoardIndex].columns[0].name
+  );
   const [subtasks, setSubtasks] = useState<string[]>([]);
+
+  const handleStatusChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setStatus(event.target.value);
+  };
 
   const addSubtask = () => {
     setSubtasks([...subtasks, ""]);
@@ -34,8 +46,35 @@ const AddTask = ({}: Props) => {
     setSubtasks(updatedSubtasks);
   };
 
+  // tasks: column.tasks.map((task) => ({
+  //     id: currentId++,
+  //     title: task.title,
+  //     description: task.description,
+  //     subtasks: task.subtasks.map((subtask) => ({
+  //       id: currentId++,
+  //       title: subtask.title,
+  //       isCompleted: subtask.isCompleted,
+  //     })),
+  //   })),
+
+  const newTask = {
+    description,
+    id: Date.now(),
+    subtasks: subtasks.map((subtask) => ({
+      id: Math.random(),
+      title: subtask,
+      isCompleted: false,
+    })),
+    title,
+  };
+
+  const testSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    dispatch(addTask({ task: newTask, selectedStatus: status }));
+  };
+
   return (
-    <div className="hidden">
+    <>
       <div
         className={`fixed md:absolute z-30 w-screen flex justify-center translate-y-[-4.5rem] md:translate-y-[-6.3rem]  ${
           sidebarState
@@ -43,7 +82,10 @@ const AddTask = ({}: Props) => {
             : "translate-x-[-1.5rem]"
         }`}
       >
-        <form className="bg-white fixed md:absolute w-[25rem] md:w-[30rem] pt-[2rem] pb-[1rem] rounded-lg z-30 overflow-scroll px-[1.65rem] h-[42rem]">
+        <form
+          onSubmit={testSubmit}
+          className="bg-white fixed md:absolute w-[25rem] md:w-[30rem] pt-[2rem] pb-[1rem] rounded-lg z-30 overflow-scroll px-[1.65rem] h-[42rem]"
+        >
           <h1 className="font-semibold text-[1.4rem]">Add New Task</h1>
           <div className="flex flex-col gap-[1.5rem]">
             <div>
@@ -54,6 +96,8 @@ const AddTask = ({}: Props) => {
                 type="text"
                 placeholder="e.g. Take coffee break"
                 className="outline-none border-[2px] border-[#00011241] focus:border-[#635FC7] indent-4 h-[3rem] w-full rounded-md appearance-none text-[0.95rem]"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
               />
             </div>
             <div>
@@ -67,6 +111,8 @@ const AddTask = ({}: Props) => {
                 autoComplete="off"
                 placeholder="e.g. It's always good to take a break. This 15 minute break will recharge the batteries a little."
                 className="outline-none border-[2px] border-[#00011241] focus:border-[#635FC7] px-4 h-[7rem] pt-3 w-full rounded-md appearance-none text-[0.95rem] resize-none"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
               />
             </div>
             <div>
@@ -116,9 +162,11 @@ const AddTask = ({}: Props) => {
                 id="dropdown"
                 name="services"
                 className="cursor-pointer bg-white font-[500] text-[#656161] w-full border-2 outline-none py-3 px-[1.5rem] appearance-none rounded-md"
+                value={status}
+                onChange={handleStatusChange}
               >
                 {boardState[activeBoardIndex].columns.map((col) => (
-                  <option key={col.id} value="Sales-and-Distribution">
+                  <option key={col.id} value={col.name}>
                     {col.name}
                   </option>
                 ))}
@@ -137,7 +185,7 @@ const AddTask = ({}: Props) => {
         </form>
       </div>
       <div className="fixed inset-0 bg-black z-20 opacity-50"></div>
-    </div>
+    </>
   );
 };
 
