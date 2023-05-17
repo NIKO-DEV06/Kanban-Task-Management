@@ -5,9 +5,7 @@ import { RootThemeState } from "../interface/interfaces";
 type Props = {};
 
 const EmptyBoard = ({}: Props) => {
-  const sidebarState = useSelector(
-    (state: RootThemeState) => state.theme.sidebar
-  );
+  const sidebarState = useSelector((state: RootThemeState) => state.ui.sidebar);
 
   return (
     <div
