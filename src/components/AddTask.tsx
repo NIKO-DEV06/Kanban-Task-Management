@@ -11,9 +11,7 @@ type Props = {};
 
 const AddTask = ({}: Props) => {
   const dispatch = useDispatch();
-  const sidebarState = useSelector(
-    (state: RootThemeState) => state.theme.sidebar
-  );
+  const sidebarState = useSelector((state: RootThemeState) => state.ui.sidebar);
   const boardState = useSelector((state: State) => state.board.boards);
   const activeBoardIndex = useSelector(
     (state: State) => state.board.activeBoardIndex
@@ -76,7 +74,7 @@ const AddTask = ({}: Props) => {
   return (
     <>
       <div
-        className={`fixed md:absolute z-30 w-screen flex justify-center translate-y-[-4.5rem] md:translate-y-[-6.3rem]  ${
+        className={`fixed md:absolute z-30 w-screen flex justify-center translate-y-[-5.5rem] md:translate-y-[-6.3rem]  ${
           sidebarState
             ? "md:translate-x-[-20rem] translate-x-[-1.5rem]"
             : "translate-x-[-1.5rem]"
@@ -84,7 +82,7 @@ const AddTask = ({}: Props) => {
       >
         <form
           onSubmit={testSubmit}
-          className="bg-white fixed md:absolute w-[25rem] md:w-[30rem] pt-[2rem] pb-[1rem] rounded-lg z-30 overflow-scroll px-[1.65rem] h-[42rem]"
+          className="bg-white fixed md:absolute w-[25rem] md:w-[30rem] pt-[2rem] pb-[1rem] rounded-lg z-30 overflow-scroll px-[1.65rem] h-[43rem] md:h-[42rem] scale-90 md:scale-95"
         >
           <h1 className="font-semibold text-[1.4rem]">Add New Task</h1>
           <div className="flex flex-col gap-[1.5rem]">

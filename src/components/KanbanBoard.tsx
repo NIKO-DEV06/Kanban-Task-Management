@@ -2,7 +2,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootThemeState, State } from "../interface/interfaces";
 import { generateRandomColor } from "../helpers/helpers";
 import { viewTask, setActiveColumn } from "../store/BoardSlice";
-import { openViewTaskModal } from "../store/ThemeSlice";
+import { openViewTaskModal } from "../store/UiSlice";
 import ViewTask from "./ViewTask";
 import AddTask from "./AddTask";
 
@@ -10,15 +10,13 @@ type Props = {};
 
 const KanbanBoard = ({}: Props) => {
   const dispatch = useDispatch();
-  const sidebarState = useSelector(
-    (state: RootThemeState) => state.theme.sidebar
-  );
+  const sidebarState = useSelector((state: RootThemeState) => state.ui.sidebar);
   const boardState = useSelector((state: State) => state.board.boards);
   const activeBoardIndex = useSelector(
     (state: State) => state.board.activeBoardIndex
   );
   const viewTaskIsVisble = useSelector(
-    (state: RootThemeState) => state.theme.viewTask
+    (state: RootThemeState) => state.ui.viewTask
   );
 
   console.log(boardState);

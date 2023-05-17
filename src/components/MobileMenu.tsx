@@ -5,7 +5,7 @@ import moon from "../assets/icon-dark-theme.svg";
 import sun from "../assets/icon-light-theme.svg";
 
 import { useSelector, useDispatch } from "react-redux";
-import { closeMobileMenu, toggleTheme } from "../store/ThemeSlice";
+import { closeMobileMenu, toggleTheme } from "../store/UiSlice";
 import { setActiveBoard } from "../store/BoardSlice";
 import { RootThemeState, State } from "../interface/interfaces";
 
@@ -13,7 +13,7 @@ type Props = {};
 
 const MobileMenu = ({}: Props) => {
   const dispatch = useDispatch();
-  const themeState = useSelector((state: RootThemeState) => state.theme.theme);
+  const themeState = useSelector((state: RootThemeState) => state.ui.theme);
   const boardState = useSelector((state: State) => state.board.boards);
   const activeBoardIndex = useSelector(
     (state: State) => state.board.activeBoardIndex

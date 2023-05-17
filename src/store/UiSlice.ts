@@ -1,14 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { ThemeState } from "../interface/interfaces";
+import { UiState } from "../interface/interfaces";
 
-const initialState: ThemeState = {
+const initialState: UiState = {
   theme: false,
   sidebar: true,
   mobileMenu: false,
   viewTask: false,
 };
 
-const themeSlice = createSlice({
+const uiSlice = createSlice({
   name: "theme",
   initialState: initialState,
   reducers: {
@@ -44,5 +44,5 @@ export const {
   closeMobileMenu,
   openViewTaskModal,
   closeViewTaskModal,
-} = themeSlice.actions;
-export default themeSlice.reducer;
+} = uiSlice.actions;
+export default uiSlice.reducer;

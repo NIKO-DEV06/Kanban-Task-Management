@@ -5,7 +5,7 @@ import moon from "../assets/icon-dark-theme.svg";
 import sun from "../assets/icon-light-theme.svg";
 import eye from "../assets/icon-hide-sidebar.svg";
 import { useSelector, useDispatch } from "react-redux";
-import { closeSidebar, toggleTheme } from "../store/ThemeSlice";
+import { closeSidebar, toggleTheme } from "../store/UiSlice";
 import { RootThemeState } from "../interface/interfaces";
 import { State } from "../interface/interfaces";
 
@@ -16,10 +16,8 @@ type Props = {};
 
 const Sidebar = ({}: Props) => {
   const dispatch = useDispatch();
-  const themeState = useSelector((state: RootThemeState) => state.theme.theme);
-  const sidebarState = useSelector(
-    (state: RootThemeState) => state.theme.sidebar
-  );
+  const themeState = useSelector((state: RootThemeState) => state.ui.theme);
+  const sidebarState = useSelector((state: RootThemeState) => state.ui.sidebar);
   const boardState = useSelector((state: State) => state.board.boards);
   const activeBoardIndex = useSelector(
     (state: State) => state.board.activeBoardIndex

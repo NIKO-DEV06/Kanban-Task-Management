@@ -1,10 +1,10 @@
 import store from "../store/store";
 
 export interface RootThemeState {
-  theme: ThemeState;
+  ui: UiState;
 }
 
-export interface ThemeState {
+export interface UiState {
   theme: boolean;
   sidebar: boolean;
   mobileMenu: boolean;

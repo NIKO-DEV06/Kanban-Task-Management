@@ -1,7 +1,7 @@
 // import EmptyBoard from "./EmptyBoard";
 import KanbanBoard from "./KanbanBoard";
 import eye from "../assets/icon-show-sidebar.svg";
-import { openSideBar } from "../store/ThemeSlice";
+import { openSideBar } from "../store/UiSlice";
 import { useDispatch } from "react-redux";
 
 type Props = {};

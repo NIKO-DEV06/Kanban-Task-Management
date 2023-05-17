@@ -1,10 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
-import themeReducer from "./ThemeSlice";
+import uiReducer from "./UiSlice";
 import boardReducer from "./BoardSlice";
 
 const store = configureStore({
   reducer: {
-    theme: themeReducer,
+    ui: uiReducer,
     board: boardReducer,
   },
 });

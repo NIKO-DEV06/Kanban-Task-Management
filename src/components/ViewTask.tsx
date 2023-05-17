@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import options from "../assets/icon-vertical-ellipsis.svg";
 import { State, RootThemeState } from "../interface/interfaces";
-import { closeViewTaskModal } from "../store/ThemeSlice";
+import { closeViewTaskModal } from "../store/UiSlice";
 import { updateTask } from "../store/BoardSlice";
 
 import { useState } from "react";
@@ -10,9 +10,7 @@ type Props = {};
 
 const ViewTask = ({}: Props) => {
   const [editDeleteModal, setEditDeleteModal] = useState(false);
-  const sidebarState = useSelector(
-    (state: RootThemeState) => state.theme.sidebar
-  );
+  const sidebarState = useSelector((state: RootThemeState) => state.ui.sidebar);
   const toggleEditDelete = () => {
     setEditDeleteModal(!editDeleteModal);
   };
