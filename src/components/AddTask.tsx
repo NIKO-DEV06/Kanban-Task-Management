@@ -44,17 +44,6 @@ const AddTask = ({}: Props) => {
     setSubtasks(updatedSubtasks);
   };
 
-  // tasks: column.tasks.map((task) => ({
-  //     id: currentId++,
-  //     title: task.title,
-  //     description: task.description,
-  //     subtasks: task.subtasks.map((subtask) => ({
-  //       id: currentId++,
-  //       title: subtask.title,
-  //       isCompleted: subtask.isCompleted,
-  //     })),
-  //   })),
-
   const newTask = {
     description,
     id: Date.now(),
