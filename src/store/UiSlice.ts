@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { UiState } from "../interface/interfaces";
 
 const initialState: UiState = {
@@ -15,34 +15,22 @@ const uiSlice = createSlice({
     toggleTheme: (state) => {
       state.theme = !state.theme;
     },
-    openSideBar: (state) => {
-      state.sidebar = true;
+    toggleSideBar: (state, action: PayloadAction<boolean>) => {
+      state.sidebar = action.payload;
     },
-    closeSidebar: (state) => {
-      state.sidebar = false;
+    toggleMobileMenu: (state, action: PayloadAction<boolean>) => {
+      state.mobileMenu = action.payload;
     },
-    openMobileMenu: (state) => {
-      state.mobileMenu = true;
-    },
-    closeMobileMenu: (state) => {
-      state.mobileMenu = false;
-    },
-    openViewTaskModal: (state) => {
-      state.viewTask = true;
-    },
-    closeViewTaskModal: (state) => {
-      state.viewTask = false;
+    toogleViewTaskModal: (state, action: PayloadAction<boolean>) => {
+      state.viewTask = action.payload;
     },
   },
 });
 
 export const {
   toggleTheme,
-  openSideBar,
-  closeSidebar,
-  openMobileMenu,
-  closeMobileMenu,
-  openViewTaskModal,
-  closeViewTaskModal,
+  toggleSideBar,
+  toggleMobileMenu,
+  toogleViewTaskModal,
 } = uiSlice.actions;
 export default uiSlice.reducer;

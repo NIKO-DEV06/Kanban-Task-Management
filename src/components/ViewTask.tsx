@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import options from "../assets/icon-vertical-ellipsis.svg";
 import { State, RootThemeState } from "../interface/interfaces";
-import { closeViewTaskModal } from "../store/UiSlice";
+import { toogleViewTaskModal } from "../store/UiSlice";
 import { updateTask } from "../store/BoardSlice";
 
 import { useState } from "react";
@@ -130,7 +130,7 @@ const ViewTask = ({}: Props) => {
         </div>
       </div>
       <div
-        onClick={() => dispatch(closeViewTaskModal())}
+        onClick={() => dispatch(toogleViewTaskModal(false))}
         className="fixed inset-0 bg-black z-20 opacity-50"
       ></div>
     </>

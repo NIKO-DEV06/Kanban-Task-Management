@@ -5,7 +5,7 @@ import moon from "../assets/icon-dark-theme.svg";
 import sun from "../assets/icon-light-theme.svg";
 import eye from "../assets/icon-hide-sidebar.svg";
 import { useSelector, useDispatch } from "react-redux";
-import { closeSidebar, toggleTheme } from "../store/UiSlice";
+import { toggleSideBar, toggleTheme } from "../store/UiSlice";
 import { RootThemeState } from "../interface/interfaces";
 import { State } from "../interface/interfaces";
 
@@ -95,7 +95,7 @@ const Sidebar = ({}: Props) => {
             <img src={sun} alt="moon" />
           </div>
           <button
-            onClick={() => dispatch(closeSidebar())}
+            onClick={() => dispatch(toggleSideBar(false))}
             className="flex ml-[3rem] items-center gap-[1rem] mt-[1rem] hover:opacity-60 duration-200"
           >
             <img src={eye} className="h-[1.1rem] w-[1.3rem]" alt="hidesvg" />

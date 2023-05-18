@@ -5,7 +5,7 @@ import moon from "../assets/icon-dark-theme.svg";
 import sun from "../assets/icon-light-theme.svg";
 
 import { useSelector, useDispatch } from "react-redux";
-import { closeMobileMenu, toggleTheme } from "../store/UiSlice";
+import { toggleMobileMenu, toggleTheme } from "../store/UiSlice";
 import { setActiveBoard } from "../store/BoardSlice";
 import { RootThemeState, State } from "../interface/interfaces";
 
@@ -30,7 +30,7 @@ const MobileMenu = ({}: Props) => {
             <div
               onClick={() => {
                 dispatch(setActiveBoard(index));
-                dispatch(closeMobileMenu());
+                dispatch(toggleMobileMenu(false));
               }}
               className={
                 activeBoardIndex === index
@@ -83,7 +83,7 @@ const MobileMenu = ({}: Props) => {
         </div>
       </div>
       <div
-        onClick={() => dispatch(closeMobileMenu())}
+        onClick={() => dispatch(toggleMobileMenu(false))}
         className="fixed bg-black opacity-50 inset-0"
       ></div>
     </>

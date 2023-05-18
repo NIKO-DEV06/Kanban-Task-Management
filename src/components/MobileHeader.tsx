@@ -5,7 +5,7 @@ import add from "../assets/icon-add-task-mobile.svg";
 import options from "../assets/icon-vertical-ellipsis.svg";
 import MobileMenu from "./MobileMenu";
 import { useSelector, useDispatch } from "react-redux";
-import { openMobileMenu } from "../store/UiSlice";
+import { toggleMobileMenu } from "../store/UiSlice";
 import { RootThemeState } from "../interface/interfaces";
 
 type Props = {};
@@ -25,13 +25,13 @@ const MobileHeader = ({}: Props) => {
       <div className="flex gap-[1rem] items-center">
         <img src={logoLight} alt="logo" className="h-[1.6rem]" />
         <h1
-          onClick={() => dispatch(openMobileMenu())}
+          onClick={() => dispatch(toggleMobileMenu(true))}
           className="text-[1.5rem] font-semibold"
         >
           Platform Launch
         </h1>
         <img
-          onClick={() => dispatch(openMobileMenu())}
+          onClick={() => dispatch(toggleMobileMenu(true))}
           src={dropDown}
           alt="dropdown"
           className="h-[0.5rem]"

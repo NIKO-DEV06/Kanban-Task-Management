@@ -2,7 +2,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootThemeState, State } from "../interface/interfaces";
 import { generateRandomColor } from "../helpers/helpers";
 import { viewTask, setActiveColumn } from "../store/BoardSlice";
-import { openViewTaskModal } from "../store/UiSlice";
+import { toogleViewTaskModal } from "../store/UiSlice";
 import ViewTask from "./ViewTask";
 import AddTask from "./AddTask";
 
@@ -55,7 +55,7 @@ const KanbanBoard = ({}: Props) => {
                     onClick={() => {
                       dispatch(viewTask(task.id));
                       dispatch(setActiveColumn(colId));
-                      dispatch(openViewTaskModal());
+                      dispatch(toogleViewTaskModal(true));
                     }}
                     className="bg-white px-[1.7rem] py-[1.5rem] w-[20rem] flex flex-col gap-[0.3rem] mt-[1rem] rounded-lg shadow-input-shadow hover:opacity-60 duration-200 cursor-pointer hover:scale-95"
                   >
