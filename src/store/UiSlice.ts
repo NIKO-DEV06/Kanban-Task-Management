@@ -6,6 +6,7 @@ const initialState: UiState = {
   sidebar: true,
   mobileMenu: false,
   viewTask: false,
+  addTask: false,
 };
 
 const uiSlice = createSlice({
@@ -24,6 +25,9 @@ const uiSlice = createSlice({
     toogleViewTaskModal: (state, action: PayloadAction<boolean>) => {
       state.viewTask = action.payload;
     },
+    toogleAddTaskModal: (state, action: PayloadAction<boolean>) => {
+      state.addTask = action.payload;
+    },
   },
 });
 
@@ -32,5 +36,6 @@ export const {
   toggleSideBar,
   toggleMobileMenu,
   toogleViewTaskModal,
+  toogleAddTaskModal,
 } = uiSlice.actions;
 export default uiSlice.reducer;

@@ -6,6 +6,7 @@ import add from "../assets/purple-add.svg";
 import drop from "../assets/icon-chevron-down.svg";
 import { State } from "../interface/interfaces";
 import { addTask } from "../store/BoardSlice";
+import { toogleAddTaskModal } from "../store/UiSlice";
 
 type Props = {};
 
@@ -171,7 +172,10 @@ const AddTask = ({}: Props) => {
           </div>
         </form>
       </div>
-      <div className="fixed inset-0 bg-black z-20 opacity-50"></div>
+      <div
+        onClick={() => dispatch(toogleAddTaskModal(false))}
+        className="fixed inset-0 bg-black z-20 opacity-50"
+      ></div>
     </>
   );
 };

@@ -44,16 +44,11 @@ const boardSlice = createSlice({
       state.activeColumn = action.payload;
     },
 
-    // addBoard: (state, action: PayloadAction<Board>) => {
-    //   return [...state.boards, action.payload];
-    // },
     viewTask: (state, action: PayloadAction<number>) => {
       const { boards, activeBoardIndex } = state;
       const activeTaskId = action.payload;
-      // Find the task in the active board
       const activeBoard = boards[activeBoardIndex];
       const task = findTask(activeBoard.columns, activeTaskId);
-      // Update the active task in the state
       state.activeTask = task;
     },
     updateTask(state, action: PayloadAction<Task>) {
@@ -87,7 +82,6 @@ const boardSlice = createSlice({
       const selectedColumn = state.boards[state.activeBoardIndex].columns.find(
         (column) => column.name === selectedStatus
       );
-      // Add the new task to the active column
       selectedColumn?.tasks.push(task);
     },
   },

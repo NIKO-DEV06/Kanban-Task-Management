@@ -1,12 +1,15 @@
 import logoLight from "../assets/logo-mobile.svg";
 
+import { useDispatch } from "react-redux";
 import { useState } from "react";
 import add from "../assets/icon-add-task-mobile.svg";
 import options from "../assets/icon-vertical-ellipsis.svg";
+import { toogleAddTaskModal } from "../store/UiSlice";
 
 type Props = {};
 
 const Header = ({}: Props) => {
+  const dispatch = useDispatch();
   const [editDeleteModal, setEditDeleteModal] = useState(false);
   const toggleEditDelete = () => {
     setEditDeleteModal(!editDeleteModal);
@@ -25,7 +28,10 @@ const Header = ({}: Props) => {
           Platform Launch
         </h1>
         <div className="flex gap-[1.5rem]">
-          <button className="bg-[#635FC7] hover:bg-[#A8A4FF] duration-200 flex justify-center items-center gap-[0.5rem] w-[10rem] h-[3rem] rounded-full">
+          <button
+            onClick={() => dispatch(toogleAddTaskModal(true))}
+            className="bg-[#635FC7] hover:bg-[#A8A4FF] duration-200 flex justify-center items-center gap-[0.5rem] w-[10rem] h-[3rem] rounded-full"
+          >
             <div>
               <img src={add} alt="" />
             </div>

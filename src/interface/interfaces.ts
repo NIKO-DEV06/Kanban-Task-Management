@@ -9,6 +9,7 @@ export interface UiState {
   sidebar: boolean;
   mobileMenu: boolean;
   viewTask: boolean;
+  addTask: boolean;
 }
 export interface RootState {
   boards: Board[];

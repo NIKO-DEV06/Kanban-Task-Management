@@ -18,6 +18,9 @@ const KanbanBoard = ({}: Props) => {
   const viewTaskIsVisble = useSelector(
     (state: RootThemeState) => state.ui.viewTask
   );
+  const addTaskIsVisble = useSelector(
+    (state: RootThemeState) => state.ui.addTask
+  );
 
   console.log(boardState);
 
@@ -79,7 +82,7 @@ const KanbanBoard = ({}: Props) => {
           </div>
         </div>
         {viewTaskIsVisble && <ViewTask />}
-        <AddTask />
+        {addTaskIsVisble && <AddTask />}
       </div>
     </>
   );

@@ -5,7 +5,7 @@ import add from "../assets/icon-add-task-mobile.svg";
 import options from "../assets/icon-vertical-ellipsis.svg";
 import MobileMenu from "./MobileMenu";
 import { useSelector, useDispatch } from "react-redux";
-import { toggleMobileMenu } from "../store/UiSlice";
+import { toggleMobileMenu, toogleAddTaskModal } from "../store/UiSlice";
 import { RootThemeState } from "../interface/interfaces";
 
 type Props = {};
@@ -38,7 +38,10 @@ const MobileHeader = ({}: Props) => {
         />
       </div>
       <div className="flex gap-[1rem]">
-        <button className="bg-[#635FC7] w-[3rem] h-[2rem] grid place-items-center rounded-[1rem]">
+        <button
+          onClick={() => dispatch(toogleAddTaskModal(true))}
+          className="bg-[#635FC7] w-[3rem] h-[2rem] grid place-items-center rounded-[1rem]"
+        >
           <img src={add} alt="add svg" />
         </button>
         <div>
