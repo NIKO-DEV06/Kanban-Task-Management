@@ -63,13 +63,21 @@ const KanbanBoard = ({}: Props) => {
                     className="bg-white px-[1.7rem] py-[1.5rem] w-[20rem] flex flex-col gap-[0.3rem] mt-[1rem] rounded-lg shadow-input-shadow hover:opacity-60 duration-200 cursor-pointer hover:scale-95"
                   >
                     <p className="font-semibold text-[1.2rem]">{task.title}</p>
-                    <p className="text-[#828FA3] font-medium">
-                      {" "}
-                      {` ${
-                        task?.subtasks.filter((subtask) => subtask.isCompleted)
-                          .length
-                      } of ${task?.subtasks.length} subtasks`}
-                    </p>
+
+                    {task.subtasks.length === 0 ? (
+                      <p className="text-[#828FA3] italic font-medium">
+                        No Subtasks
+                      </p>
+                    ) : (
+                      <p className="text-[#828FA3] font-medium">
+                        {" "}
+                        {` ${
+                          task?.subtasks.filter(
+                            (subtask) => subtask.isCompleted
+                          ).length
+                        } of ${task?.subtasks.length} subtasks`}
+                      </p>
+                    )}
                   </div>
                 ))}
               </div>

@@ -1,5 +1,8 @@
-import { useState, FormEvent } from "react";
+import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
 import { RootThemeState } from "../interface/interfaces";
 import xSvg from "../assets/icon-cross.svg";
 import add from "../assets/purple-add.svg";
@@ -9,6 +12,11 @@ import { addTask } from "../store/BoardSlice";
 import { toogleAddTaskModal } from "../store/UiSlice";
 
 type Props = {};
+
+type FormValues = {
+  title: string;
+  description: string;
+};
 
 const AddTask = ({}: Props) => {
   const dispatch = useDispatch();
@@ -56,9 +64,24 @@ const AddTask = ({}: Props) => {
     title,
   };
 
-  const testSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const schema = yup.object().shape({
+    title: yup.string().trim().required("Title field is required"),
+    description: yup.string().trim().required("Description field is required"),
+  });
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm<FormValues>({
+    resolver: yupResolver(schema),
+  });
+
+  const submitAddTaskForm = (_data: FormValues) => {
     dispatch(addTask({ task: newTask, selectedStatus: status }));
+    dispatch(toogleAddTaskModal(false));
+    reset();
   };
 
   return (
@@ -71,7 +94,7 @@ const AddTask = ({}: Props) => {
         }`}
       >
         <form
-          onSubmit={testSubmit}
+          onSubmit={handleSubmit(submitAddTaskForm)}
           className="bg-white fixed md:absolute w-[25rem] md:w-[30rem] pt-[2rem] pb-[1rem] rounded-lg z-30 overflow-scroll px-[1.65rem] h-[43rem] md:h-[42rem] scale-90 md:scale-95"
         >
           <h1 className="font-semibold text-[1.4rem]">Add New Task</h1>
@@ -81,27 +104,45 @@ const AddTask = ({}: Props) => {
                 Title
               </p>
               <input
+                {...register("title")}
+                name="title"
                 type="text"
                 placeholder="e.g. Take coffee break"
-                className="outline-none border-[2px] border-[#00011241] focus:border-[#635FC7] indent-4 h-[3rem] w-full rounded-md appearance-none text-[0.95rem]"
+                className={`outline-none border-[2px] border-[#00011241] ${
+                  errors.title
+                    ? "focus:border-[#ff0000]"
+                    : "focus:border-[#635FC7]"
+                }  indent-4 h-[3rem] w-full rounded-md appearance-none text-[0.95rem]`}
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
               />
+
+              <p className="text-[#ff0000] font-[500] text-sm text-left pt-1">
+                {errors.title?.message}
+              </p>
             </div>
             <div>
               <p className="text-[#828FA3] text-[1.1rem] font-[500] mb-[0.5rem]">
                 Description
               </p>
               <textarea
+                {...register("description")}
                 name="description"
                 cols={30}
                 rows={10}
                 autoComplete="off"
                 placeholder="e.g. It's always good to take a break. This 15 minute break will recharge the batteries a little."
-                className="outline-none border-[2px] border-[#00011241] focus:border-[#635FC7] px-4 h-[7rem] pt-3 w-full rounded-md appearance-none text-[0.95rem] resize-none"
+                className={`outline-none border-[2px] border-[#00011241] ${
+                  errors.description
+                    ? "focus:border-[#ff0000]"
+                    : "focus:border-[#635FC7]"
+                } px-4 h-[7rem] pt-3 w-full rounded-md appearance-none text-[0.95rem] resize-none`}
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
               />
+              <p className="text-[#ff0000] font-[500] text-sm text-left pt-1">
+                {errors.description?.message}
+              </p>
             </div>
             <div>
               <p className="text-[#828FA3] text-[1.1rem] font-[500] mb-[0.5rem]">
@@ -114,6 +155,7 @@ const AddTask = ({}: Props) => {
                     className="flex justify-between gap-[1rem] items-center"
                   >
                     <input
+                      name="subtasks"
                       type="text"
                       placeholder=""
                       className="outline-none border-[2px] border-[#00011241] focus:border-[#635FC7] indent-4 h-[3rem] w-full rounded-md appearance-none text-[0.95rem]"

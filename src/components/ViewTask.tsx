@@ -113,6 +113,9 @@ const ViewTask = ({}: Props) => {
                 </span>
               </p>
             ))}
+            {activeTask?.subtasks.length === 0 && (
+              <p className="mx-[1.5rem] italic text-[#828FA3]">No Subtask</p>
+            )}
           </div>
 
           <p className="font-semibold text-[#828FA3] ml-[2.5rem] md:ml-[1.5rem] mt-[1.1rem]">
