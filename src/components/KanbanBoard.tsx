@@ -25,7 +25,7 @@ const KanbanBoard = ({}: Props) => {
   const deleteTaskIsVisble = useSelector(
     (state: RootThemeState) => state.ui.deleteTask
   );
-
+  const colors = ["#49C4E5", "#8471F2", "#67E2AE", "#f084f0"];
   console.log(boardState);
 
   return (
@@ -39,14 +39,16 @@ const KanbanBoard = ({}: Props) => {
       >
         <div className="flex pr-[2rem]">
           {/* COL */}
-          {boardState[activeBoardIndex].columns.map((column) => {
+          {boardState[activeBoardIndex].columns.map((column, index) => {
             const colId = column.id;
+            const colorIndex = index % colors.length;
+            const backgroundColor = colors[colorIndex];
             return (
               <div key={column.id} className="col pr-[2rem]">
                 <div className="flex items-center gap-[0.7rem]">
                   <div
                     className={`w-[1rem] h-[1rem] rounded-full`}
-                    style={{ backgroundColor: generateRandomColor() }}
+                    style={{ backgroundColor }}
                   ></div>
                   <h1 className="text-[#828FA3] tracking-[0.2em] uppercase font-medium">
                     {`${column.name} (${column.tasks.length})`}
