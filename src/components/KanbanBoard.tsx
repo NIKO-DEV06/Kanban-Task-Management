@@ -5,6 +5,7 @@ import { viewTask, setActiveColumn } from "../store/BoardSlice";
 import { toogleViewTaskModal } from "../store/UiSlice";
 import ViewTask from "./ViewTask";
 import AddTask from "./AddTask";
+import DeleteTask from "./DeleteTask";
 
 type Props = {};
 
@@ -20,6 +21,9 @@ const KanbanBoard = ({}: Props) => {
   );
   const addTaskIsVisble = useSelector(
     (state: RootThemeState) => state.ui.addTask
+  );
+  const deleteTaskIsVisble = useSelector(
+    (state: RootThemeState) => state.ui.deleteTask
   );
 
   console.log(boardState);
@@ -91,6 +95,7 @@ const KanbanBoard = ({}: Props) => {
         </div>
         {viewTaskIsVisble && <ViewTask />}
         {addTaskIsVisble && <AddTask />}
+        {deleteTaskIsVisble && <DeleteTask />}
       </div>
     </>
   );
