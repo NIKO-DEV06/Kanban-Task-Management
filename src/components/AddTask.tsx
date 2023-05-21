@@ -5,6 +5,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { RootThemeState } from "../interface/interfaces";
 import xSvg from "../assets/icon-cross.svg";
+import xSvgRed from "../assets/subtask-red-close.svg";
 import add from "../assets/purple-add.svg";
 import drop from "../assets/icon-chevron-down.svg";
 import { State } from "../interface/interfaces";
@@ -16,6 +17,7 @@ type Props = {};
 type FormValues = {
   title: string;
   description: string;
+  subtasks: string[];
 };
 
 const AddTask = ({}: Props) => {
@@ -26,12 +28,10 @@ const AddTask = ({}: Props) => {
     (state: State) => state.board.activeBoardIndex
   );
 
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
   const [status, setStatus] = useState(
     boardState[activeBoardIndex].columns[0].name
   );
-  const [subtasks, setSubtasks] = useState<string[]>([]);
+  const [subtasks, setSubtasks] = useState<string[]>([""]);
 
   const handleStatusChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setStatus(event.target.value);
@@ -47,26 +47,10 @@ const AddTask = ({}: Props) => {
     setSubtasks(updatedSubtasks);
   };
 
-  const handleSubtaskChange = (index: number, value: string) => {
-    const updatedSubtasks = [...subtasks];
-    updatedSubtasks[index] = value;
-    setSubtasks(updatedSubtasks);
-  };
-
-  const newTask = {
-    description,
-    id: Date.now(),
-    subtasks: subtasks.map((subtask) => ({
-      id: Math.random(),
-      title: subtask,
-      isCompleted: false,
-    })),
-    title,
-  };
-
   const schema = yup.object().shape({
     title: yup.string().trim().required("Title field is required"),
     description: yup.string().trim().required("Description field is required"),
+    subtasks: yup.array().of(yup.string().trim().required("Can't be empty")),
   });
 
   const {
@@ -78,7 +62,18 @@ const AddTask = ({}: Props) => {
     resolver: yupResolver(schema),
   });
 
-  const submitAddTaskForm = (_data: FormValues) => {
+  const submitAddTaskForm = (data: FormValues) => {
+    const { title, description, subtasks } = data;
+    const newTask = {
+      description,
+      id: Date.now(),
+      subtasks: subtasks.map((subtask) => ({
+        id: Math.random(),
+        title: subtask,
+        isCompleted: false,
+      })),
+      title,
+    };
     dispatch(addTask({ task: newTask, selectedStatus: status }));
     dispatch(toogleAddTaskModal(false));
     reset();
@@ -108,16 +103,14 @@ const AddTask = ({}: Props) => {
                 name="title"
                 type="text"
                 placeholder="e.g. Take coffee break"
-                className={`outline-none border-[2px] border-[#00011241] ${
+                className={`outline-none border-[2px] ${
                   errors.title
-                    ? "focus:border-[#ff0000]"
-                    : "focus:border-[#635FC7]"
+                    ? "focus:border-[#ea5555] border-[#ea5555]"
+                    : "focus:border-[#635FC7] border-[#00011241]"
                 }  indent-4 h-[3rem] w-full rounded-md appearance-none text-[0.95rem]`}
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
               />
 
-              <p className="text-[#ff0000] font-[500] text-sm text-left pt-1">
+              <p className="text-[#ea5555] font-[500] text-sm text-left pt-1">
                 {errors.title?.message}
               </p>
             </div>
@@ -132,15 +125,13 @@ const AddTask = ({}: Props) => {
                 rows={10}
                 autoComplete="off"
                 placeholder="e.g. It's always good to take a break. This 15 minute break will recharge the batteries a little."
-                className={`outline-none border-[2px] border-[#00011241] ${
+                className={`outline-none border-[2px]  ${
                   errors.description
-                    ? "focus:border-[#ff0000]"
-                    : "focus:border-[#635FC7]"
+                    ? "focus:border-[#ea5555] border-[#ea5555]"
+                    : "focus:border-[#635FC7] border-[#00011241]"
                 } px-4 h-[7rem] pt-3 w-full rounded-md appearance-none text-[0.95rem] resize-none`}
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
               />
-              <p className="text-[#ff0000] font-[500] text-sm text-left pt-1">
+              <p className="text-[#ea5555] font-[500] text-sm text-left pt-1">
                 {errors.description?.message}
               </p>
             </div>
@@ -149,27 +140,36 @@ const AddTask = ({}: Props) => {
                 Subtasks
               </p>
               <div className="max-h-[8rem] overflow-scroll flex flex-col gap-[0.5rem]">
-                {subtasks.map((subtask, index) => (
+                {subtasks.map((_subtask, index) => (
                   <div
                     key={index}
                     className="flex justify-between gap-[1rem] items-center"
                   >
                     <input
-                      name="subtasks"
+                      {...register(`subtasks.${index}`)}
                       type="text"
                       placeholder=""
-                      className="outline-none border-[2px] border-[#00011241] focus:border-[#635FC7] indent-4 h-[3rem] w-full rounded-md appearance-none text-[0.95rem]"
-                      onChange={(e) =>
-                        handleSubtaskChange(index, e.target.value)
-                      }
-                      value={subtask}
+                      className={`outline-none border-[2px] ${
+                        errors.subtasks && errors.subtasks[index]
+                          ? "focus:border-[#ea5555] border-[#ea5555]"
+                          : "focus:border-[#635FC7] border-[#00011241]"
+                      } indent-4 h-[3rem] w-full rounded-md appearance-none text-[0.95rem]`}
                     />
                     <img
-                      src={xSvg}
+                      src={
+                        errors.subtasks && errors.subtasks[index]
+                          ? xSvgRed
+                          : xSvg
+                      }
                       alt=""
                       className="w-[1.3rem] h-[1.3rem] cursor-pointer"
                       onClick={() => removeSubtask(index)}
                     />
+                    {errors.subtasks && errors.subtasks[index] && (
+                      <p className="absolute text-[#ea5555] right-[5rem] text-sm text-left pt-1 font-[400] translate-y-[-1.5px]">
+                        {errors.subtasks[index]?.message}
+                      </p>
+                    )}
                   </div>
                 ))}
               </div>
