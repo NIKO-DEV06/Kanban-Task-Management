@@ -1,6 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
 import { RootThemeState, State } from "../interface/interfaces";
-import { generateRandomColor } from "../helpers/helpers";
 import { viewTask, setActiveColumn } from "../store/BoardSlice";
 import { toogleViewTaskModal } from "../store/UiSlice";
 import ViewTask from "./ViewTask";
