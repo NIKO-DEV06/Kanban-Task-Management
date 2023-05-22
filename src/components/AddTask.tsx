@@ -27,7 +27,7 @@ const AddTask = ({}: Props) => {
   const activeBoardIndex = useSelector(
     (state: State) => state.board.activeBoardIndex
   );
-
+  const [duplicateTaskState, setDuplicateTaskState] = useState(false);
   const [status, setStatus] = useState(
     boardState[activeBoardIndex].columns[0].name
   );
@@ -47,11 +47,32 @@ const AddTask = ({}: Props) => {
     setSubtasks(updatedSubtasks);
   };
 
-  const schema = yup.object().shape({
-    title: yup.string().trim().required("Title field is required"),
-    description: yup.string().trim().required("Description field is required"),
-    subtasks: yup.array().of(yup.string().trim().required("Can't be empty")),
-  });
+  const schema = yup
+    .object()
+    .shape({
+      title: yup.string().trim().required("Title field is required"),
+      description: yup
+        .string()
+        .trim()
+        .required("Description field is required"),
+      subtasks: yup.array().of(yup.string().trim().required("Can't be empty")),
+    })
+    .test(
+      "duplicate-task",
+      "Task with the same name already exists",
+      function (values) {
+        const allTasks = boardState.flatMap((board) =>
+          board.columns.flatMap((column) => column.tasks)
+        );
+        const duplicateTask = allTasks.find(
+          (task) => task.title === values.title
+        );
+        duplicateTask
+          ? setDuplicateTaskState(true)
+          : setDuplicateTaskState(false);
+        return !duplicateTask;
+      }
+    );
 
   const {
     register,
@@ -92,10 +113,10 @@ const AddTask = ({}: Props) => {
           onSubmit={handleSubmit(submitAddTaskForm)}
           className="bg-white fixed md:absolute w-[25rem] md:w-[30rem] pt-[2rem] pb-[1rem] rounded-lg z-30 overflow-scroll px-[1.65rem] h-[43rem] md:h-[42rem] scale-90 md:scale-95"
         >
-          <h1 className="font-semibold text-[1.4rem]">Add New Task</h1>
-          <div className="flex flex-col gap-[1.5rem]">
+          <h1 className="font-[600] text-[1.25rem]">Add New Task</h1>
+          <div className="flex flex-col gap-[0.7rem]">
             <div>
-              <p className="text-[#828FA3] text-[1.1rem] font-[500] mt-[1.5rem] mb-[0.5rem]">
+              <p className="text-[#828FA3] text-[1rem] font-[500] mt-[1.2rem] mb-[0.5rem]">
                 Title
               </p>
               <input
@@ -104,7 +125,7 @@ const AddTask = ({}: Props) => {
                 type="text"
                 placeholder="e.g. Take coffee break"
                 className={`outline-none border-[2px] ${
-                  errors.title
+                  errors.title || duplicateTaskState
                     ? "focus:border-[#ea5555] border-[#ea5555]"
                     : "focus:border-[#635FC7] border-[#00011241]"
                 }  indent-4 h-[3rem] w-full rounded-md appearance-none text-[0.95rem]`}
@@ -113,9 +134,14 @@ const AddTask = ({}: Props) => {
               <p className="text-[#ea5555] font-[500] text-sm text-left pt-1">
                 {errors.title?.message}
               </p>
+              {duplicateTaskState && (
+                <p className=" absolute text-[#ea5555] font-[500] text-sm text-left pt-1 right-[3rem] top-[7.7rem]">
+                  Task name used
+                </p>
+              )}
             </div>
             <div>
-              <p className="text-[#828FA3] text-[1.1rem] font-[500] mb-[0.5rem]">
+              <p className="text-[#828FA3] text-[1rem] font-[500] mb-[0.5rem]">
                 Description
               </p>
               <textarea
@@ -136,7 +162,7 @@ const AddTask = ({}: Props) => {
               </p>
             </div>
             <div>
-              <p className="text-[#828FA3] text-[1.1rem] font-[500] mb-[0.5rem]">
+              <p className="text-[#828FA3] text-[1rem] font-[500] mb-[0.5rem]">
                 Subtasks
               </p>
               <div className="max-h-[8rem] overflow-scroll flex flex-col gap-[0.5rem]">
@@ -183,7 +209,7 @@ const AddTask = ({}: Props) => {
             <p className="text-[#635FC7] font-semibold">Add New Subtask</p>
           </div>
           <div className="mt-[1.5rem]">
-            <p className="text-[#828FA3] text-[1.1rem] font-[500] mb-[0.5rem]">
+            <p className="text-[#828FA3] text-[1rem] font-[500] mb-[0.5rem]">
               Status
             </p>
 

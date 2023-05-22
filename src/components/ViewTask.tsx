@@ -10,6 +10,7 @@ type Props = {};
 const ViewTask = ({}: Props) => {
   const [editDeleteModal, setEditDeleteModal] = useState(false);
   const sidebarState = useSelector((state: RootThemeState) => state.ui.sidebar);
+
   const toggleEditDelete = () => {
     setEditDeleteModal(!editDeleteModal);
   };

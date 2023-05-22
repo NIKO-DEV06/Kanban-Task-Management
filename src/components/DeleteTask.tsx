@@ -46,7 +46,10 @@ const DeleteTask = () => {
           </div>
         </div>
       </div>
-      <div className="fixed inset-0 bg-black z-20 opacity-50"></div>
+      <div
+        onClick={() => dispatch(toogleDeleteTaskModal(false))}
+        className="fixed inset-0 bg-black z-20 opacity-50"
+      ></div>
     </>
   );
 };

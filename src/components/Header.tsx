@@ -1,6 +1,6 @@
 import logoLight from "../assets/logo-mobile.svg";
-
-import { useDispatch } from "react-redux";
+import { State } from "../interface/interfaces";
+import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import add from "../assets/icon-add-task-mobile.svg";
 import options from "../assets/icon-vertical-ellipsis.svg";
@@ -10,6 +10,10 @@ type Props = {};
 
 const Header = ({}: Props) => {
   const dispatch = useDispatch();
+  const boardState = useSelector((state: State) => state.board.boards);
+  const activeBoardIndex = useSelector(
+    (state: State) => state.board.activeBoardIndex
+  );
   const [editDeleteModal, setEditDeleteModal] = useState(false);
   const toggleEditDelete = () => {
     setEditDeleteModal(!editDeleteModal);
@@ -25,7 +29,7 @@ const Header = ({}: Props) => {
         </div>
 
         <h1 className="absolute left-[20.5rem] text-[1.5rem] font-semibold grid place-items-center tracking-wide">
-          Platform Launch
+          {boardState[activeBoardIndex].name}
         </h1>
         <div className="flex gap-[1.5rem]">
           <button

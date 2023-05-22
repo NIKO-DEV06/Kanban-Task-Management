@@ -5,6 +5,8 @@ import { toogleViewTaskModal } from "../store/UiSlice";
 import ViewTask from "./ViewTask";
 import AddTask from "./AddTask";
 import DeleteTask from "./DeleteTask";
+import EditTask from "./EditTask";
+import { motion } from "framer-motion";
 
 type Props = {};
 
@@ -58,16 +60,17 @@ const KanbanBoard = ({}: Props) => {
                   <div className="border-[#828fa3] border-2 border-dashed h-[33rem] w-[18rem] rounded-lg mt-[1rem] grid place-items-center group cursor-pointer"></div>
                 )}
                 {column.tasks.map((task) => (
-                  <div
+                  <motion.div
+                    whileTap={{ scale: 0.85 }}
                     key={task.id}
                     onClick={() => {
                       dispatch(viewTask(task.id));
                       dispatch(setActiveColumn(colId));
                       dispatch(toogleViewTaskModal(true));
                     }}
-                    className="bg-white px-[1.7rem] py-[1.5rem] w-[20rem] flex flex-col gap-[0.3rem] mt-[1rem] rounded-lg shadow-input-shadow hover:opacity-60 duration-200 cursor-pointer hover:scale-95"
+                    className="bg-white px-[1.7rem] py-[1.5rem] w-[20rem] flex flex-col gap-[0.3rem] mt-[1rem] rounded-lg shadow-input-shadow md:hover:opacity-60 duration-200 cursor-pointer md:hover:scale-95"
                   >
-                    <p className="font-semibold text-[1.2rem]">{task.title}</p>
+                    <p className="font-semibold text-[1.1rem]">{task.title}</p>
 
                     {task.subtasks.length === 0 ? (
                       <p className="text-[#828FA3] italic font-medium">
@@ -75,7 +78,6 @@ const KanbanBoard = ({}: Props) => {
                       </p>
                     ) : (
                       <p className="text-[#828FA3] font-medium">
-                        {" "}
                         {` ${
                           task?.subtasks.filter(
                             (subtask) => subtask.isCompleted
@@ -83,7 +85,7 @@ const KanbanBoard = ({}: Props) => {
                         } of ${task?.subtasks.length} subtasks`}
                       </p>
                     )}
-                  </div>
+                  </motion.div>
                 ))}
               </div>
             );
@@ -97,6 +99,7 @@ const KanbanBoard = ({}: Props) => {
         {viewTaskIsVisble && <ViewTask />}
         {addTaskIsVisble && <AddTask />}
         {deleteTaskIsVisble && <DeleteTask />}
+        {/* {<EditTask />} */}
       </div>
     </>
   );
