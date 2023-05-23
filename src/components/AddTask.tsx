@@ -136,7 +136,7 @@ const AddTask = ({}: Props) => {
               </p>
               {duplicateTaskState && (
                 <p className=" absolute text-[#ea5555] font-[500] text-sm text-left pt-1 right-[3rem] top-[7.7rem]">
-                  Task name used
+                  Used
                 </p>
               )}
             </div>

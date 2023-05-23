@@ -26,6 +26,9 @@ const KanbanBoard = ({}: Props) => {
   const deleteTaskIsVisble = useSelector(
     (state: RootThemeState) => state.ui.deleteTask
   );
+  const editTaskIsVisble = useSelector(
+    (state: RootThemeState) => state.ui.editTask
+  );
   const colors = ["#49C4E5", "#8471F2", "#67E2AE", "#f084f0"];
   console.log(boardState);
 
@@ -99,7 +102,7 @@ const KanbanBoard = ({}: Props) => {
         {viewTaskIsVisble && <ViewTask />}
         {addTaskIsVisble && <AddTask />}
         {deleteTaskIsVisble && <DeleteTask />}
-        {/* {<EditTask />} */}
+        {editTaskIsVisble && <EditTask />}
       </div>
     </>
   );

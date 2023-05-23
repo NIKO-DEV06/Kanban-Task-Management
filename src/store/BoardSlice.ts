@@ -95,6 +95,60 @@ const boardSlice = createSlice({
       state.boards[state.activeBoardIndex].columns = updatedColumns;
       state.activeTask = null;
     },
+    editTask: (
+      state: RootState,
+      action: PayloadAction<{ task: Task; selectedStatus: string }>
+    ) => {
+      if (state.activeTask) {
+        const { task, selectedStatus } = action.payload;
+        const targetColumn = state.boards[state.activeBoardIndex].columns.find(
+          (column) => column.name === selectedStatus
+        );
+
+        if (targetColumn) {
+          const existingTaskIndex = targetColumn.tasks.findIndex(
+            (tsk) => tsk.id === task.id
+          );
+          const updatedTask = {
+            ...state.activeTask,
+            title: task.title,
+            description: task.description,
+            subtasks: task.subtasks,
+          };
+
+          if (state.activeColumn && state.activeColumn !== targetColumn.id) {
+            const sourceColumn = state.boards[
+              state.activeBoardIndex
+            ].columns.find((column) =>
+              column.tasks?.some((task) => task.id === state.activeTask?.id)
+            );
+
+            if (sourceColumn) {
+              const taskIndex = sourceColumn.tasks.findIndex(
+                (tsk) => tsk.id === state.activeTask?.id
+              );
+
+              if (taskIndex !== -1) {
+                sourceColumn.tasks.splice(taskIndex, 1);
+              }
+            }
+          }
+
+          if (existingTaskIndex !== -1) {
+            const updatedTask = {
+              ...task,
+            };
+            targetColumn.tasks.splice(existingTaskIndex, 1, updatedTask);
+          } else {
+            state.boards[state.activeBoardIndex].columns
+              .find((col) => col.name === selectedStatus)
+              ?.tasks.push(updatedTask);
+          }
+
+          state.activeTask = updatedTask;
+        }
+      }
+    },
   },
 });
 
@@ -105,5 +159,6 @@ export const {
   updateTask,
   addTask,
   deleteTask,
+  editTask,
 } = boardSlice.actions;
 export default boardSlice.reducer;

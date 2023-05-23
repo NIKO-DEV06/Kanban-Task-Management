@@ -1,7 +1,11 @@
 import { useSelector, useDispatch } from "react-redux";
 import options from "../assets/icon-vertical-ellipsis.svg";
 import { State, RootThemeState } from "../interface/interfaces";
-import { toogleViewTaskModal, toogleDeleteTaskModal } from "../store/UiSlice";
+import {
+  toogleViewTaskModal,
+  toogleDeleteTaskModal,
+  toogleEditTaskModal,
+} from "../store/UiSlice";
 import { updateTask } from "../store/BoardSlice";
 import { useState } from "react";
 
@@ -62,7 +66,11 @@ const ViewTask = ({}: Props) => {
             {editDeleteModal && (
               <div className="absolute bg-white right-[1rem] w-[12rem] top-[4.7rem] pl-[1rem] py-[1rem] flex flex-col gap-[1rem] rounded-lg shadow-input-shadow">
                 <p
-                  onClick={() => setEditDeleteModal(false)}
+                  onClick={() => {
+                    setEditDeleteModal(false);
+                    dispatch(toogleViewTaskModal(false));
+                    dispatch(toogleEditTaskModal(true));
+                  }}
                   className="text-[#828FA3] cursor-pointer hover:opacity-70 duration-200"
                 >
                   Edit Task

@@ -9,6 +9,8 @@ import xSvgRed from "../assets/subtask-red-close.svg";
 import add from "../assets/purple-add.svg";
 import drop from "../assets/icon-chevron-down.svg";
 import { State } from "../interface/interfaces";
+import { toogleEditTaskModal } from "../store/UiSlice";
+import { editTask } from "../store/BoardSlice";
 
 type Props = {};
 
@@ -26,17 +28,22 @@ const EditTask = ({}: Props) => {
     (state: State) => state.board.activeBoardIndex
   );
   const activeTask = useSelector((state: State) => state.board.activeTask);
-  const activeColumnIndex = useSelector(
-    (state: State) => state.board.activeColumn
-  );
+  const activeColumn = useSelector((state: State) => state.board.activeColumn);
   const [duplicateTaskState, setDuplicateTaskState] = useState(false);
 
   const defaultTitle = activeTask?.title;
   const defaultDescription = activeTask?.description;
-  const [subtasks, setSubtasks] = useState<string[]>([""]);
-  console.log(activeTask?.subtasks.map((subtask) => subtask.title));
+  const [subtasks, setSubtasks] = useState<string[]>(
+    activeTask?.subtasks.map((subtask) => subtask.title) || [""]
+  );
+
+  const isComSubtasks = activeTask?.subtasks.map(
+    (subtask) => subtask.isCompleted
+  );
+
   const [status, setStatus] = useState(
-    boardState[activeBoardIndex].columns[0].name
+    boardState[activeBoardIndex].columns.find((col) => col.id === activeColumn)
+      ?.name
   );
 
   const handleStatusChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -71,7 +78,11 @@ const EditTask = ({}: Props) => {
           board.columns.flatMap((column) => column.tasks)
         );
         const duplicateTask = allTasks.find(
-          (task) => task.title === values.title
+          (task) =>
+            task.title.toLocaleLowerCase() ===
+              values.title.toLocaleLowerCase() &&
+            activeTask?.title.toLocaleLowerCase() !==
+              values.title.toLocaleLowerCase()
         );
         duplicateTask
           ? setDuplicateTaskState(true)
@@ -91,18 +102,18 @@ const EditTask = ({}: Props) => {
 
   const submitEditTaskForm = (data: FormValues) => {
     const { title, description, subtasks } = data;
-    const newTask = {
+    const editedTask = {
       description,
-      id: Date.now(),
-      subtasks: subtasks.map((subtask) => ({
+      id: activeTask?.id!,
+      subtasks: subtasks.map((subtask, index) => ({
         id: Math.random(),
         title: subtask,
-        isCompleted: false,
+        isCompleted: isComSubtasks ? isComSubtasks[index] : false,
       })),
       title,
     };
-    // dispatch(addTask({ task: newTask, selectedStatus: status }));
-
+    dispatch(editTask({ task: editedTask, selectedStatus: status! }));
+    dispatch(toogleEditTaskModal(false));
     reset();
   };
 
@@ -119,7 +130,7 @@ const EditTask = ({}: Props) => {
           onSubmit={handleSubmit(submitEditTaskForm)}
           className="bg-white fixed md:absolute w-[25rem] md:w-[30rem] pt-[2rem] pb-[1rem] rounded-lg z-30 overflow-scroll px-[1.65rem] h-[43rem] md:h-[42rem] scale-90 md:scale-95"
         >
-          <h1 className="font-[600] text-[1.25rem]">Add New Task</h1>
+          <h1 className="font-[600] text-[1.25rem]">Edit Task</h1>
           <div className="flex flex-col gap-[0.7rem]">
             <div>
               <p className="text-[#828FA3] text-[1rem] font-[500] mt-[1.2rem] mb-[0.5rem]">
@@ -135,15 +146,15 @@ const EditTask = ({}: Props) => {
                     ? "focus:border-[#ea5555] border-[#ea5555]"
                     : "focus:border-[#635FC7] border-[#00011241]"
                 }  indent-4 h-[3rem] w-full rounded-md appearance-none text-[0.95rem]`}
-                defaultValue="balls"
+                defaultValue={defaultTitle}
               />
 
               <p className="text-[#ea5555] font-[500] text-sm text-left pt-1">
                 {errors.title?.message}
               </p>
               {duplicateTaskState && (
-                <p className=" absolute text-[#ea5555] font-[500] text-sm text-left pt-1 right-[3rem] top-[7.7rem]">
-                  Task name used
+                <p className=" absolute text-[#ea5555] font-[500] text-sm text-left pt-1 right-[2.5rem] top-[7.7rem]">
+                  Used
                 </p>
               )}
             </div>
@@ -163,6 +174,7 @@ const EditTask = ({}: Props) => {
                     ? "focus:border-[#ea5555] border-[#ea5555]"
                     : "focus:border-[#635FC7] border-[#00011241]"
                 } px-4 h-[7rem] pt-3 w-full rounded-md appearance-none text-[0.95rem] resize-none`}
+                defaultValue={defaultDescription}
               />
               <p className="text-[#ea5555] font-[500] text-sm text-left pt-1">
                 {errors.description?.message}
@@ -173,10 +185,10 @@ const EditTask = ({}: Props) => {
                 Subtasks
               </p>
               <div className="max-h-[8rem] overflow-scroll flex flex-col gap-[0.5rem]">
-                {subtasks.map((_subtask, index) => (
+                {subtasks.map((subtask, index) => (
                   <div
                     key={index}
-                    className="flex justify-between gap-[1rem] items-center"
+                    className="relative flex justify-between gap-[1rem] items-center"
                   >
                     <input
                       {...register(`subtasks.${index}`)}
@@ -187,6 +199,7 @@ const EditTask = ({}: Props) => {
                           ? "focus:border-[#ea5555] border-[#ea5555]"
                           : "focus:border-[#635FC7] border-[#00011241]"
                       } indent-4 h-[3rem] w-full rounded-md appearance-none text-[0.95rem]`}
+                      defaultValue={subtask}
                     />
                     <img
                       src={
@@ -199,7 +212,7 @@ const EditTask = ({}: Props) => {
                       onClick={() => removeSubtask(index)}
                     />
                     {errors.subtasks && errors.subtasks[index] && (
-                      <p className="absolute text-[#ea5555] right-[5rem] text-sm text-left pt-1 font-[400] translate-y-[-1.5px]">
+                      <p className="absolute text-[#ea5555] bottom-[0.8rem] right-[3rem] text-sm text-left pt-1 font-[400] translate-y-[-1.5px]">
                         {errors.subtasks[index]?.message}
                       </p>
                     )}
@@ -242,15 +255,12 @@ const EditTask = ({}: Props) => {
             </div>
 
             <button className="bg-[#635FC7] flex justify-center rounded-full py-[0.9rem] mt-[1rem] gap-[0.5rem] items-center w-full">
-              <p className="text-white font-semibold">Create Task</p>
+              <p className="text-white font-semibold">Save Changes</p>
             </button>
           </div>
         </form>
       </div>
-      <div
-        // onClick={() => dispatch(toogleAddTaskModal(false))}
-        className="fixed inset-0 bg-black z-20 opacity-50"
-      ></div>
+      <div className="fixed inset-0 bg-black z-20 opacity-50"></div>
     </>
   );
 };
