@@ -56,8 +56,9 @@ const EditTask = ({}: Props) => {
 
   const removeSubtask = (index: number) => {
     const updatedSubtasks = [...subtasks];
-    updatedSubtasks.splice(index, 1);
+    updatedSubtasks.splice(index, 1); // Remove the subtask at the specified index
     setSubtasks(updatedSubtasks);
+    console.log(updatedSubtasks);
   };
 
   const schema = yup
@@ -114,6 +115,7 @@ const EditTask = ({}: Props) => {
     };
     dispatch(editTask({ task: editedTask, selectedStatus: status! }));
     dispatch(toogleEditTaskModal(false));
+    console.log(subtasks);
     reset();
   };
 
@@ -187,11 +189,12 @@ const EditTask = ({}: Props) => {
               <div className="max-h-[8rem] overflow-scroll flex flex-col gap-[0.5rem]">
                 {subtasks.map((subtask, index) => (
                   <div
-                    key={index}
+                    key={`${subtask}-${index}`}
                     className="relative flex justify-between gap-[1rem] items-center"
                   >
                     <input
                       {...register(`subtasks.${index}`)}
+                      name={`subtasks[${index}]`}
                       type="text"
                       placeholder=""
                       className={`outline-none border-[2px] ${
@@ -260,7 +263,10 @@ const EditTask = ({}: Props) => {
           </div>
         </form>
       </div>
-      <div className="fixed inset-0 bg-black z-20 opacity-50"></div>
+      <div
+        onClick={() => dispatch(toogleEditTaskModal(false))}
+        className="fixed inset-0 bg-black z-20 opacity-50"
+      ></div>
     </>
   );
 };

@@ -5,7 +5,11 @@ import moon from "../assets/icon-dark-theme.svg";
 import sun from "../assets/icon-light-theme.svg";
 
 import { useSelector, useDispatch } from "react-redux";
-import { toggleMobileMenu, toggleTheme } from "../store/UiSlice";
+import {
+  toggleMobileMenu,
+  toggleTheme,
+  toogleAddBoardModal,
+} from "../store/UiSlice";
 import { setActiveBoard } from "../store/BoardSlice";
 import { RootThemeState, State } from "../interface/interfaces";
 
@@ -61,7 +65,13 @@ const MobileMenu = ({}: Props) => {
         </div>
         <div className="flex ml-[3rem] gap-[1rem] mt-[1.5rem] hover:opacity-70 duration-200 cursor-pointer">
           <img src={pboard} className="w-[1.2rem] h-[1.2rem]" alt="board svg" />
-          <div className="flex items-center gap-[0.3rem]">
+          <div
+            onClick={() => {
+              dispatch(toogleAddBoardModal(true));
+              dispatch(toggleMobileMenu(false));
+            }}
+            className="flex items-center gap-[0.3rem]"
+          >
             <img src={padd} className="w-[0.7rem] h-[0.7rem]" alt="" />
             <p className="font-semibold text-[#635FC7]">Create New Board</p>
           </div>

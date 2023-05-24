@@ -9,6 +9,7 @@ const initialState: UiState = {
   addTask: false,
   deleteTask: false,
   editTask: false,
+  addBoard: false,
 };
 
 const uiSlice = createSlice({
@@ -36,6 +37,9 @@ const uiSlice = createSlice({
     toogleEditTaskModal: (state, action: PayloadAction<boolean>) => {
       state.editTask = action.payload;
     },
+    toogleAddBoardModal: (state, action: PayloadAction<boolean>) => {
+      state.addBoard = action.payload;
+    },
   },
 });
 
@@ -47,5 +51,6 @@ export const {
   toogleAddTaskModal,
   toogleDeleteTaskModal,
   toogleEditTaskModal,
+  toogleAddBoardModal,
 } = uiSlice.actions;
 export default uiSlice.reducer;

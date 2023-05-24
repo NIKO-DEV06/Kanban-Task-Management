@@ -149,6 +149,9 @@ const boardSlice = createSlice({
         }
       }
     },
+    addNewBoard: (state, action: PayloadAction<Board>) => {
+      state.boards.push(action.payload);
+    },
   },
 });
 
@@ -160,5 +163,6 @@ export const {
   addTask,
   deleteTask,
   editTask,
+  addNewBoard,
 } = boardSlice.actions;
 export default boardSlice.reducer;

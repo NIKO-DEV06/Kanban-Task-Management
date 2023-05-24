@@ -12,6 +12,7 @@ export interface UiState {
   addTask: boolean;
   deleteTask: boolean;
   editTask: boolean;
+  addBoard: boolean;
 }
 export interface RootState {
   boards: Board[];

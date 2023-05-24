@@ -5,10 +5,13 @@ import moon from "../assets/icon-dark-theme.svg";
 import sun from "../assets/icon-light-theme.svg";
 import eye from "../assets/icon-hide-sidebar.svg";
 import { useSelector, useDispatch } from "react-redux";
-import { toggleSideBar, toggleTheme } from "../store/UiSlice";
+import {
+  toggleSideBar,
+  toggleTheme,
+  toogleAddBoardModal,
+} from "../store/UiSlice";
 import { RootThemeState } from "../interface/interfaces";
 import { State } from "../interface/interfaces";
-
 import Board from "./Board";
 import { setActiveBoard } from "../store/BoardSlice";
 
@@ -74,7 +77,10 @@ const Sidebar = ({}: Props) => {
               className="w-[1.2rem] h-[1.2rem]"
               alt="board svg"
             />
-            <div className="flex items-center gap-[0.3rem]">
+            <div
+              onClick={() => dispatch(toogleAddBoardModal(true))}
+              className="flex items-center gap-[0.3rem]"
+            >
               <img src={padd} className="w-[0.7rem] h-[0.7rem]" alt="" />
               <p className="font-semibold text-[#635FC7]">Create New Board</p>
             </div>

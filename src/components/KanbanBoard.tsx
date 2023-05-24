@@ -7,6 +7,7 @@ import AddTask from "./AddTask";
 import DeleteTask from "./DeleteTask";
 import EditTask from "./EditTask";
 import { motion } from "framer-motion";
+import AddBoard from "./AddBoard";
 
 type Props = {};
 
@@ -28,6 +29,9 @@ const KanbanBoard = ({}: Props) => {
   );
   const editTaskIsVisble = useSelector(
     (state: RootThemeState) => state.ui.editTask
+  );
+  const addBoardIsVisble = useSelector(
+    (state: RootThemeState) => state.ui.addBoard
   );
   const colors = ["#49C4E5", "#8471F2", "#67E2AE", "#f084f0"];
   console.log(boardState);
@@ -103,6 +107,7 @@ const KanbanBoard = ({}: Props) => {
         {addTaskIsVisble && <AddTask />}
         {deleteTaskIsVisble && <DeleteTask />}
         {editTaskIsVisble && <EditTask />}
+        {addBoardIsVisble && <AddBoard />}
       </div>
     </>
   );

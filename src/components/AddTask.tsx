@@ -169,7 +169,7 @@ const AddTask = ({}: Props) => {
                 {subtasks.map((_subtask, index) => (
                   <div
                     key={index}
-                    className="flex justify-between gap-[1rem] items-center"
+                    className="flex relative justify-between gap-[1rem] items-center"
                   >
                     <input
                       {...register(`subtasks.${index}`)}
@@ -192,7 +192,7 @@ const AddTask = ({}: Props) => {
                       onClick={() => removeSubtask(index)}
                     />
                     {errors.subtasks && errors.subtasks[index] && (
-                      <p className="absolute text-[#ea5555] right-[5rem] text-sm text-left pt-1 font-[400] translate-y-[-1.5px]">
+                      <p className="absolute text-[#ea5555] right-[3.5rem] text-sm text-left pt-1 font-[400] translate-y-[-1.5px]">
                         {errors.subtasks[index]?.message}
                       </p>
                     )}
