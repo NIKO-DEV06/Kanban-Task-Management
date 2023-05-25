@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { RootThemeState } from "../interface/interfaces";
+import { RootThemeState, State } from "../interface/interfaces";
 import xSvg from "../assets/icon-cross.svg";
 import add from "../assets/purple-add.svg";
 import { useForm } from "react-hook-form";
@@ -15,25 +15,16 @@ type Column = {
 };
 type FormValues = {
   boardName: string;
-  //   boardCols: string[];
   boardCols: Column[];
 };
 
 const AddBoard = () => {
   const dispatch = useDispatch();
   const sidebarState = useSelector((state: RootThemeState) => state.ui.sidebar);
+  const boardState = useSelector((state: State) => state.board.boards);
 
   const [columns, setColumns] = useState<Column[]>([{ id: 0, name: "" }]);
-  //   columns.filter((column) => column.name.trim() !== "");
-  //   const addColumn = () => {
-  //     setColumns([...columns, ""]);
-  //   };
-
-  //   const removeColumn = (index: number) => {
-  //     const updatedColumns = [...columns];
-  //     updatedColumns.splice(index, 1);
-  //     setColumns(updatedColumns);
-  //   };
+  const [duplicateBoardName, setDuplicateBoardName] = useState(false);
 
   const addColumn = () => {
     const newColumn: Column = {
@@ -56,15 +47,30 @@ const AddBoard = () => {
     setColumns(updatedColumns);
   };
 
-  const schema = yup.object().shape({
-    boardName: yup.string().trim().required("Board Name field is required"),
-
-    boardCols: yup.array().of(
-      yup.object().shape({
-        name: yup.string().trim().required("Can't be empty"),
-      })
-    ),
-  });
+  const schema = yup
+    .object()
+    .shape({
+      boardName: yup.string().trim().required("Board Name field is required"),
+      boardCols: yup.array().of(
+        yup.object().shape({
+          name: yup.string().trim().required("Can't be empty"),
+        })
+      ),
+    })
+    .test(
+      "duplicate-task",
+      "Task with the same name already exists",
+      function (values) {
+        const allBoardNames = boardState.map((board) =>
+          board.name.toLocaleLowerCase()
+        );
+        const duplicateBoardName = allBoardNames.includes(
+          values.boardName.toLocaleLowerCase()
+        );
+        setDuplicateBoardName(duplicateBoardName);
+        return !duplicateBoardName;
+      }
+    );
   const {
     register,
     handleSubmit,
@@ -75,11 +81,11 @@ const AddBoard = () => {
   });
 
   const addBoard = (data: FormValues) => {
-    const { boardName, boardCols } = data;
+    const { boardName } = data;
     const newBoard = {
       id: Date.now(),
       name: boardName,
-      columns: boardCols.map((bCol) => ({
+      columns: columns.map((bCol) => ({
         id: Math.random(),
         name: bCol.name,
         tasks: [],
@@ -105,7 +111,7 @@ const AddBoard = () => {
           className="bg-white w-[24rem] md:w-[32rem] rounded-lg p-[2rem] z-30 overflow-scroll pointer-events-auto"
         >
           <h1 className="font-[600] text-[1.2rem]">Add New Board</h1>
-          <div>
+          <div className="relative">
             <p className="text-[#828FA3] text-[0.9rem] font-[500] mt-[1rem] mb-[0.5rem]">
               Board Name
             </p>
@@ -114,8 +120,8 @@ const AddBoard = () => {
               {...register("boardName")}
               name="boardName"
               placeholder="e.g. Web Design"
-              className={`outline-none border-[2px] indent-4 h-[3rem] w-full rounded-md appearance-none text-[0.95rem]  ${
-                errors.boardName
+              className={` outline-none border-[2px] indent-4 h-[3rem] w-full rounded-md appearance-none text-[0.95rem]  ${
+                errors.boardName || duplicateBoardName
                   ? "focus:border-[#ea5555] border-[#ea5555]"
                   : "focus:border-[#635FC7] border-[#00011241]"
               }`}
@@ -124,6 +130,11 @@ const AddBoard = () => {
             <p className="text-[#ea5555] font-[500] text-sm text-left pt-1">
               {errors.boardName?.message}
             </p>
+            {duplicateBoardName && (
+              <p className=" absolute text-[#ea5555] font-[500] text-sm text-left pt-1 right-[1rem] top-[2.5rem]">
+                Used
+              </p>
+            )}
           </div>
           <div>
             <p className="text-[#828FA3] text-[0.9rem] font-[500] mt-[1.2rem] mb-[0.5rem]">
@@ -163,7 +174,7 @@ const AddBoard = () => {
                         columns.length > 1 ? "right-[3rem]" : "right-[1rem]"
                       }`}
                     >
-                      {errors.boardCols[index]?.message}
+                      {errors.boardCols[index]?.name?.message}
                     </p>
                   )}
                 </div>

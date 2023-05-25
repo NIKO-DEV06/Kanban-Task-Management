@@ -14,10 +14,14 @@ import { editTask } from "../store/BoardSlice";
 
 type Props = {};
 
+type Subtasks = {
+  id: number;
+  name: string;
+};
 type FormValues = {
   title: string;
   description: string;
-  subtasks: string[];
+  subtasks: Subtasks[];
 };
 
 const EditTask = ({}: Props) => {
@@ -33,12 +37,15 @@ const EditTask = ({}: Props) => {
 
   const defaultTitle = activeTask?.title;
   const defaultDescription = activeTask?.description;
-  const [subtasks, setSubtasks] = useState<string[]>(
-    activeTask?.subtasks.map((subtask) => subtask.title) || [""]
+  const [subtasks, setSubtasks] = useState<Subtasks[]>(
+    activeTask?.subtasks.map((subtask) => ({
+      id: subtask.id,
+      name: subtask.title,
+    })) || [{ id: 0, name: "" }]
   );
 
-  const isComSubtasks = activeTask?.subtasks.map(
-    (subtask) => subtask.isCompleted
+  const [isComSubtasks, setIsComSubtasks] = useState<boolean[]>(
+    activeTask?.subtasks.map((subtask) => subtask.isCompleted) || [false]
   );
 
   const [status, setStatus] = useState(
@@ -51,14 +58,29 @@ const EditTask = ({}: Props) => {
   };
 
   const addSubtask = () => {
-    setSubtasks([...subtasks, ""]);
+    const newSubtasks: Subtasks = {
+      id: Date.now(),
+      name: "",
+    };
+    setSubtasks([...subtasks, newSubtasks]);
   };
 
   const removeSubtask = (index: number) => {
-    const updatedSubtasks = [...subtasks];
-    updatedSubtasks.splice(index, 1); // Remove the subtask at the specified index
+    const updatedSubtasks = subtasks
+      .filter((_, idx) => idx !== index)
+      .map((subtask, idx) => ({ ...subtask, id: idx }));
     setSubtasks(updatedSubtasks);
-    console.log(updatedSubtasks);
+  };
+
+  const handleChangeSubtask = (index: number, value: string) => {
+    const updatedSubtasks = [...subtasks];
+    updatedSubtasks[index].name = value;
+    setSubtasks(updatedSubtasks);
+    setIsComSubtasks((prevIsComSubtasks) => {
+      const updatedIsComSubtasks = [...prevIsComSubtasks];
+      updatedIsComSubtasks[index] = isComSubtasks[index] || false;
+      return updatedIsComSubtasks;
+    });
   };
 
   const schema = yup
@@ -69,7 +91,11 @@ const EditTask = ({}: Props) => {
         .string()
         .trim()
         .required("Description field is required"),
-      subtasks: yup.array().of(yup.string().trim().required("Can't be empty")),
+      subtasks: yup.array().of(
+        yup.object().shape({
+          name: yup.string().trim().required("Can't be empty"),
+        })
+      ),
     })
     .test(
       "duplicate-task",
@@ -102,22 +128,22 @@ const EditTask = ({}: Props) => {
   });
 
   const submitEditTaskForm = (data: FormValues) => {
-    const { title, description, subtasks } = data;
+    const { title, description } = data;
     const editedTask = {
       description,
       id: activeTask?.id!,
       subtasks: subtasks.map((subtask, index) => ({
         id: Math.random(),
-        title: subtask,
+        title: subtask.name,
         isCompleted: isComSubtasks ? isComSubtasks[index] : false,
       })),
       title,
     };
     dispatch(editTask({ task: editedTask, selectedStatus: status! }));
     dispatch(toogleEditTaskModal(false));
-    console.log(subtasks);
     reset();
   };
+  console.log(subtasks);
 
   return (
     <>
@@ -189,12 +215,13 @@ const EditTask = ({}: Props) => {
               <div className="max-h-[8rem] overflow-scroll flex flex-col gap-[0.5rem]">
                 {subtasks.map((subtask, index) => (
                   <div
-                    key={`${subtask}-${index}`}
+                    key={subtask.id}
                     className="relative flex justify-between gap-[1rem] items-center"
                   >
                     <input
-                      {...register(`subtasks.${index}`)}
-                      name={`subtasks[${index}]`}
+                      {...register(`subtasks.${index}.name`, {
+                        shouldUnregister: true,
+                      })}
                       type="text"
                       placeholder=""
                       className={`outline-none border-[2px] ${
@@ -202,7 +229,10 @@ const EditTask = ({}: Props) => {
                           ? "focus:border-[#ea5555] border-[#ea5555]"
                           : "focus:border-[#635FC7] border-[#00011241]"
                       } indent-4 h-[3rem] w-full rounded-md appearance-none text-[0.95rem]`}
-                      defaultValue={subtask}
+                      defaultValue={subtask.name}
+                      onChange={(e) =>
+                        handleChangeSubtask(index, e.target.value)
+                      }
                     />
                     <img
                       src={
@@ -216,7 +246,7 @@ const EditTask = ({}: Props) => {
                     />
                     {errors.subtasks && errors.subtasks[index] && (
                       <p className="absolute text-[#ea5555] bottom-[0.8rem] right-[3rem] text-sm text-left pt-1 font-[400] translate-y-[-1.5px]">
-                        {errors.subtasks[index]?.message}
+                        {errors.subtasks[index]?.name?.message}
                       </p>
                     )}
                   </div>

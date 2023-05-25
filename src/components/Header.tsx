@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import add from "../assets/icon-add-task-mobile.svg";
 import options from "../assets/icon-vertical-ellipsis.svg";
-import { toogleAddTaskModal } from "../store/UiSlice";
+import { toogleAddTaskModal, toogleDeleteBoardModal } from "../store/UiSlice";
 
 type Props = {};
 
@@ -56,7 +56,10 @@ const Header = ({}: Props) => {
                 Edit Board
               </p>
               <p
-                onClick={() => setEditDeleteModal(false)}
+                onClick={() => {
+                  setEditDeleteModal(false);
+                  dispatch(toogleDeleteBoardModal(true));
+                }}
                 className="text-[#EA5555] cursor-pointer"
               >
                 Delete Board

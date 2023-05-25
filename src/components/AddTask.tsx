@@ -14,10 +14,14 @@ import { toogleAddTaskModal } from "../store/UiSlice";
 
 type Props = {};
 
+type Subtasks = {
+  id: number;
+  name: string;
+};
 type FormValues = {
   title: string;
   description: string;
-  subtasks: string[];
+  subtasks: Subtasks[];
 };
 
 const AddTask = ({}: Props) => {
@@ -31,19 +35,28 @@ const AddTask = ({}: Props) => {
   const [status, setStatus] = useState(
     boardState[activeBoardIndex].columns[0].name
   );
-  const [subtasks, setSubtasks] = useState<string[]>([""]);
-
+  const [subtasks, setSubtasks] = useState<Subtasks[]>([{ id: 0, name: "" }]);
   const handleStatusChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setStatus(event.target.value);
   };
 
   const addSubtask = () => {
-    setSubtasks([...subtasks, ""]);
+    const newSubtasks: Subtasks = {
+      id: Date.now(),
+      name: "",
+    };
+    setSubtasks([...subtasks, newSubtasks]);
   };
 
   const removeSubtask = (index: number) => {
+    const updatedSubtasks = subtasks
+      .filter((_, idx) => idx !== index)
+      .map((subtask, idx) => ({ ...subtask, id: idx }));
+    setSubtasks(updatedSubtasks);
+  };
+  const handleChangeSubtask = (index: number, value: string) => {
     const updatedSubtasks = [...subtasks];
-    updatedSubtasks.splice(index, 1);
+    updatedSubtasks[index].name = value;
     setSubtasks(updatedSubtasks);
   };
 
@@ -55,7 +68,11 @@ const AddTask = ({}: Props) => {
         .string()
         .trim()
         .required("Description field is required"),
-      subtasks: yup.array().of(yup.string().trim().required("Can't be empty")),
+      subtasks: yup.array().of(
+        yup.object().shape({
+          name: yup.string().trim().required("Can't be empty"),
+        })
+      ),
     })
     .test(
       "duplicate-task",
@@ -84,13 +101,13 @@ const AddTask = ({}: Props) => {
   });
 
   const submitAddTaskForm = (data: FormValues) => {
-    const { title, description, subtasks } = data;
+    const { title, description } = data;
     const newTask = {
       description,
       id: Date.now(),
       subtasks: subtasks.map((subtask) => ({
         id: Math.random(),
-        title: subtask,
+        title: subtask.name,
         isCompleted: false,
       })),
       title,
@@ -166,13 +183,15 @@ const AddTask = ({}: Props) => {
                 Subtasks
               </p>
               <div className="max-h-[8rem] overflow-scroll flex flex-col gap-[0.5rem]">
-                {subtasks.map((_subtask, index) => (
+                {subtasks.map((subtask, index) => (
                   <div
-                    key={index}
+                    key={subtask.id}
                     className="flex relative justify-between gap-[1rem] items-center"
                   >
                     <input
-                      {...register(`subtasks.${index}`)}
+                      {...register(`subtasks.${index}.name`, {
+                        shouldUnregister: true,
+                      })}
                       type="text"
                       placeholder=""
                       className={`outline-none border-[2px] ${
@@ -180,6 +199,10 @@ const AddTask = ({}: Props) => {
                           ? "focus:border-[#ea5555] border-[#ea5555]"
                           : "focus:border-[#635FC7] border-[#00011241]"
                       } indent-4 h-[3rem] w-full rounded-md appearance-none text-[0.95rem]`}
+                      value={subtask.name}
+                      onChange={(e) =>
+                        handleChangeSubtask(index, e.target.value)
+                      }
                     />
                     <img
                       src={
@@ -193,7 +216,7 @@ const AddTask = ({}: Props) => {
                     />
                     {errors.subtasks && errors.subtasks[index] && (
                       <p className="absolute text-[#ea5555] right-[3.5rem] text-sm text-left pt-1 font-[400] translate-y-[-1.5px]">
-                        {errors.subtasks[index]?.message}
+                        {errors.subtasks[index]?.name?.message}
                       </p>
                     )}
                   </div>

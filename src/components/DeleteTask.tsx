@@ -10,9 +10,9 @@ const DeleteTask = () => {
   const activeTaskId = activeTask?.id;
   return (
     <>
-      <div className="fixed z-30 w-screen flex justify-center">
+      <div className="fixed z-30 w-screen flex justify-center pointer-events-none">
         <div
-          className={`bg-white flex flex-col gap-[1.5rem] mx-[1.5rem] rounded-lg py-[2rem] px-[2rem] translate-y-[5.5rem] ${
+          className={`pointer-events-auto bg-white flex flex-col gap-[1.5rem] mx-[1.5rem] rounded-lg py-[2rem] px-[2rem] translate-y-[5.5rem] ${
             sidebarState
               ? "translate-x-[-1.4rem] md:translate-x-[-20rem]"
               : "translate-x-[-1.4rem] md:translate-x-[-3rem]"
@@ -22,8 +22,8 @@ const DeleteTask = () => {
             Delete this task?
           </h1>
           <p className="text-[#828FA3]">
-            Are you sure you want to delete the 'Build settings UI' task and its
-            subtasks? This action cannot be reversed.
+            {`Are you sure you want to delete the '${activeTask?.title}' task and its
+            subtasks? This action cannot be reversed.`}
           </p>
           <div className="flex flex-col md:flex-row gap-[0.5rem]">
             <button

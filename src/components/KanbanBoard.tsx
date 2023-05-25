@@ -8,6 +8,7 @@ import DeleteTask from "./DeleteTask";
 import EditTask from "./EditTask";
 import { motion } from "framer-motion";
 import AddBoard from "./AddBoard";
+import DeleteBoard from "./DeleteBoard";
 
 type Props = {};
 
@@ -32,6 +33,9 @@ const KanbanBoard = ({}: Props) => {
   );
   const addBoardIsVisble = useSelector(
     (state: RootThemeState) => state.ui.addBoard
+  );
+  const deleteBoardIsVisble = useSelector(
+    (state: RootThemeState) => state.ui.deleteBoard
   );
   const colors = ["#49C4E5", "#8471F2", "#67E2AE", "#f084f0"];
   console.log(boardState);
@@ -108,6 +112,7 @@ const KanbanBoard = ({}: Props) => {
         {deleteTaskIsVisble && <DeleteTask />}
         {editTaskIsVisble && <EditTask />}
         {addBoardIsVisble && <AddBoard />}
+        {deleteBoardIsVisble && <DeleteBoard />}
       </div>
     </>
   );

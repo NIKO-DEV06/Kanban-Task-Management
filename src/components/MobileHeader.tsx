@@ -5,7 +5,11 @@ import add from "../assets/icon-add-task-mobile.svg";
 import options from "../assets/icon-vertical-ellipsis.svg";
 import MobileMenu from "./MobileMenu";
 import { useSelector, useDispatch } from "react-redux";
-import { toggleMobileMenu, toogleAddTaskModal } from "../store/UiSlice";
+import {
+  toggleMobileMenu,
+  toogleAddTaskModal,
+  toogleDeleteBoardModal,
+} from "../store/UiSlice";
 import { RootThemeState } from "../interface/interfaces";
 
 type Props = {};
@@ -60,7 +64,10 @@ const MobileHeader = ({}: Props) => {
                 Edit Board
               </p>
               <p
-                onClick={() => setEditDeleteModal(false)}
+                onClick={() => {
+                  setEditDeleteModal(false);
+                  dispatch(toogleDeleteBoardModal(true));
+                }}
                 className="text-[#EA5555] cursor-pointer"
               >
                 Delete Board
