@@ -9,6 +9,7 @@ import EditTask from "./EditTask";
 import { motion } from "framer-motion";
 import AddBoard from "./AddBoard";
 import DeleteBoard from "./DeleteBoard";
+import EmptyBoard from "./EmptyBoard";
 
 type Props = {};
 
@@ -51,7 +52,7 @@ const KanbanBoard = ({}: Props) => {
       >
         <div className="flex pr-[2rem]">
           {/* COL */}
-          {boardState[activeBoardIndex].columns.map((column, index) => {
+          {boardState[activeBoardIndex]?.columns.map((column, index) => {
             const colId = column.id;
             const colorIndex = index % colors.length;
             const backgroundColor = colors[colorIndex];
@@ -101,11 +102,14 @@ const KanbanBoard = ({}: Props) => {
               </div>
             );
           })}
-          <div className="bg-[#828fa332] h-[33rem] w-[18rem] rounded-lg mt-[2.5rem] grid place-items-center group cursor-pointer">
-            <p className="text-[#828FA3] text-[1.4rem] font-semibold group-hover:text-[#635FC7] duration-200">
-              + New Column
-            </p>
-          </div>
+          {boardState[activeBoardIndex]?.columns.length !== 0 ||
+            (boardState.length !== 0 && (
+              <div className="bg-[#828fa332] h-[33rem] w-[18rem] rounded-lg mt-[2.5rem] grid place-items-center group cursor-pointer">
+                <p className="text-[#828FA3] text-[1.4rem] font-semibold group-hover:text-[#635FC7] duration-200">
+                  + New Column
+                </p>
+              </div>
+            ))}
         </div>
         {viewTaskIsVisble && <ViewTask />}
         {addTaskIsVisble && <AddTask />}
@@ -113,6 +117,8 @@ const KanbanBoard = ({}: Props) => {
         {editTaskIsVisble && <EditTask />}
         {addBoardIsVisble && <AddBoard />}
         {deleteBoardIsVisble && <DeleteBoard />}
+        {boardState[activeBoardIndex]?.columns.length === 0 ||
+          (boardState.length === 0 && <EmptyBoard />)}
       </div>
     </>
   );

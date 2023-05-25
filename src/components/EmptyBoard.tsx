@@ -1,26 +1,41 @@
 import add from "../assets/icon-add-task-mobile.svg";
-import { useSelector } from "react-redux";
-import { RootThemeState } from "../interface/interfaces";
+import { useSelector, useDispatch } from "react-redux";
+import { RootThemeState, State } from "../interface/interfaces";
+import { toogleAddBoardModal } from "../store/UiSlice";
 
 type Props = {};
 
 const EmptyBoard = ({}: Props) => {
+  const dispatch = useDispatch();
+  const boardState = useSelector((state: State) => state.board.boards);
+
   const sidebarState = useSelector((state: RootThemeState) => state.ui.sidebar);
 
+  // boardState[activeBoardIndex]?.columns.length === 0
   return (
     <div
       className={`flex flex-col justify-center items-center translate-y-[14rem] gap-[1.5rem] ${
-        sidebarState ? "md:pl-[20rem] lg:pl-[25rem] xl:pl-[30rem]" : ""
+        sidebarState
+          ? "md:pl-[0rem] md:translate-x-[-2.5rem] lg:pl-[5rem] xl:pl-[10rem]"
+          : ""
       }`}
     >
       <h1 className="text-center text-[1.5rem] mx-[1rem] md:ml-[3rem] font-semibold text-[#828FA3]">
-        This board is empty. Create a new column to get started.
+        {boardState.length === 0
+          ? "There are no Boards. Create a Board to get started."
+          : " This board is empty. Create a new column to get started."}
       </h1>
-      <button className="bg-[#635FC7] hover:bg-[#A8A4FF] duration-200 flex justify-center items-center gap-[0.5rem] w-[13rem] h-[4rem] rounded-full">
+      <button
+        onClick={() => dispatch(toogleAddBoardModal(true))}
+        className="bg-[#635FC7] hover:bg-[#A8A4FF] duration-200 flex justify-center items-center gap-[0.5rem] w-[13rem] h-[4rem] rounded-full"
+      >
         <div>
           <img src={add} alt="" />
         </div>
-        <p className="text-white font-semibold text-[1.1rem]">Add New Column</p>
+        <p className="text-white font-semibold text-[1.1rem]">
+          {" "}
+          {boardState.length === 0 ? "Add New Board" : " Add New Column"}
+        </p>
       </button>
     </div>
   );

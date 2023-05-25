@@ -10,7 +10,7 @@ import {
   toogleAddTaskModal,
   toogleDeleteBoardModal,
 } from "../store/UiSlice";
-import { RootThemeState } from "../interface/interfaces";
+import { RootThemeState, State } from "../interface/interfaces";
 
 type Props = {};
 
@@ -21,6 +21,10 @@ const MobileHeader = ({}: Props) => {
   };
   const dispatch = useDispatch();
 
+  const boardState = useSelector((state: State) => state.board.boards);
+  const activeBoardIndex = useSelector(
+    (state: State) => state.board.activeBoardIndex
+  );
   const sidebarState = useSelector(
     (state: RootThemeState) => state.ui.mobileMenu
   );
@@ -32,7 +36,7 @@ const MobileHeader = ({}: Props) => {
           onClick={() => dispatch(toggleMobileMenu(true))}
           className="text-[1.5rem] font-semibold"
         >
-          Platform Launch
+          {boardState[activeBoardIndex]?.name}
         </h1>
         <img
           onClick={() => dispatch(toggleMobileMenu(true))}

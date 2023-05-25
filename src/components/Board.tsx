@@ -1,18 +1,13 @@
-import EmptyBoard from "./EmptyBoard";
 import KanbanBoard from "./KanbanBoard";
 import eye from "../assets/icon-show-sidebar.svg";
 import { toggleSideBar } from "../store/UiSlice";
-import { useDispatch, useSelector } from "react-redux";
-import { State } from "../interface/interfaces";
+import { useDispatch } from "react-redux";
 
 type Props = {};
 
 const Board = ({}: Props) => {
-  const boardState = useSelector((state: State) => state.board.boards);
-  const activeBoardIndex = useSelector(
-    (state: State) => state.board.activeBoardIndex
-  );
   const dispatch = useDispatch();
+
   return (
     <div className="pt-[8rem] h-screen overflow-x-scroll">
       <button
@@ -22,11 +17,7 @@ const Board = ({}: Props) => {
         <img src={eye} className="" alt="hidesvg" />
       </button>
 
-      {boardState[activeBoardIndex].columns.length === 0 ? (
-        <EmptyBoard />
-      ) : (
-        <KanbanBoard />
-      )}
+      <KanbanBoard />
     </div>
   );
 };

@@ -27,7 +27,7 @@ const MobileMenu = ({}: Props) => {
     <>
       <div className="fixed bg-white z-40 mt-[27rem] pb-[1.5rem] rounded-lg pr-[1.5rem] translate-x-[15%]">
         <p className="uppercase mt-[1rem] text-[#828FA3] tracking-[0.2em] text-[0.85rem] font-[500] ml-[3rem] mb-[1rem] ">
-          {`All boards (${boardState.length})`}
+          {`All boards (${boardState?.length})`}
         </p>
         <div className="flex flex-col gap-[0.5rem]">
           {boardState.map((bName, index) => (
