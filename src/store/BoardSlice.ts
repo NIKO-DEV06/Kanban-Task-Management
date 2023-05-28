@@ -158,6 +158,10 @@ const boardSlice = createSlice({
       state.boards = state.boards.filter((_, index) => index !== boardIndex);
       state.activeBoardIndex = 0;
     },
+    editBoard: (state, action: PayloadAction<Board>) => {
+      const editedBoard = action.payload;
+      state.boards[state.activeBoardIndex] = editedBoard;
+    },
   },
 });
 
@@ -171,5 +175,6 @@ export const {
   editTask,
   addNewBoard,
   deleteBoard,
+  editBoard,
 } = boardSlice.actions;
 export default boardSlice.reducer;

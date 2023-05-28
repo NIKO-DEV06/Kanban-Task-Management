@@ -58,8 +58,8 @@ const AddBoard = () => {
       ),
     })
     .test(
-      "duplicate-task",
-      "Task with the same name already exists",
+      "duplicate-board",
+      "Board with the same name already exists",
       function (values) {
         const allBoardNames = boardState.map((board) =>
           board.name.toLocaleLowerCase()
@@ -92,7 +92,6 @@ const AddBoard = () => {
       })),
     };
     dispatch(addNewBoard(newBoard));
-    console.log(newBoard);
     dispatch(toogleAddBoardModal(false));
     setColumns([{ id: 0, name: "" }]);
     reset();

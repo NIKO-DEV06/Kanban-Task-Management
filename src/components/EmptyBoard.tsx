@@ -11,13 +11,12 @@ const EmptyBoard = ({}: Props) => {
 
   const sidebarState = useSelector((state: RootThemeState) => state.ui.sidebar);
 
-  // boardState[activeBoardIndex]?.columns.length === 0
   return (
     <div
       className={`flex flex-col justify-center items-center translate-y-[14rem] gap-[1.5rem] ${
         sidebarState
           ? "md:pl-[0rem] md:translate-x-[-2.5rem] lg:pl-[5rem] xl:pl-[10rem]"
-          : ""
+          : "md:pl-[5rem] md:translate-x-[-2.5rem] lg:pl-[13rem] xl:pl-[20rem]"
       }`}
     >
       <h1 className="text-center text-[1.5rem] mx-[1rem] md:ml-[3rem] font-semibold text-[#828FA3]">

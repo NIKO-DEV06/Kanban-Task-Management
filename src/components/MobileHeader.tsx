@@ -9,6 +9,7 @@ import {
   toggleMobileMenu,
   toogleAddTaskModal,
   toogleDeleteBoardModal,
+  toogleEditBoardModal,
 } from "../store/UiSlice";
 import { RootThemeState, State } from "../interface/interfaces";
 
@@ -62,7 +63,10 @@ const MobileHeader = ({}: Props) => {
           {editDeleteModal && (
             <div className="absolute bg-white right-[1rem] w-[12rem] top-[5.5rem] pl-[1rem] py-[1rem] flex flex-col gap-[1rem] rounded-lg shadow-input-shadow">
               <p
-                onClick={() => setEditDeleteModal(false)}
+                onClick={() => {
+                  setEditDeleteModal(false);
+                  dispatch(toogleEditBoardModal(true));
+                }}
                 className="text-[#828FA3] cursor-pointer"
               >
                 Edit Board

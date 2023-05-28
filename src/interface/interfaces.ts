@@ -1,4 +1,4 @@
-import store from "../store/store";
+import { store } from "../store/store";
 
 export interface RootThemeState {
   ui: UiState;
@@ -14,6 +14,7 @@ export interface UiState {
   editTask: boolean;
   addBoard: boolean;
   deleteBoard: boolean;
+  editBoard: boolean;
 }
 export interface RootState {
   boards: Board[];

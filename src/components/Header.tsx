@@ -4,7 +4,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import add from "../assets/icon-add-task-mobile.svg";
 import options from "../assets/icon-vertical-ellipsis.svg";
-import { toogleAddTaskModal, toogleDeleteBoardModal } from "../store/UiSlice";
+import {
+  toogleAddTaskModal,
+  toogleDeleteBoardModal,
+  toogleEditBoardModal,
+} from "../store/UiSlice";
 
 type Props = {};
 
@@ -50,7 +54,10 @@ const Header = ({}: Props) => {
           {editDeleteModal && (
             <div className="absolute bg-white w-[12rem] top-[5.5rem] pl-[1rem] py-[1rem] flex flex-col gap-[1rem] rounded-lg shadow-input-shadow">
               <p
-                onClick={() => setEditDeleteModal(false)}
+                onClick={() => {
+                  setEditDeleteModal(false);
+                  dispatch(toogleEditBoardModal(true));
+                }}
                 className="text-[#828FA3] cursor-pointer"
               >
                 Edit Board

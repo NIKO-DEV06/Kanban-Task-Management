@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import { RootThemeState, State } from "../interface/interfaces";
 import { viewTask, setActiveColumn } from "../store/BoardSlice";
-import { toogleViewTaskModal } from "../store/UiSlice";
+import { toogleViewTaskModal, toogleEditBoardModal } from "../store/UiSlice";
 import ViewTask from "./ViewTask";
 import AddTask from "./AddTask";
 import DeleteTask from "./DeleteTask";
@@ -10,6 +10,7 @@ import { motion } from "framer-motion";
 import AddBoard from "./AddBoard";
 import DeleteBoard from "./DeleteBoard";
 import EmptyBoard from "./EmptyBoard";
+import EditBoard from "./EditBoard";
 
 type Props = {};
 
@@ -37,6 +38,9 @@ const KanbanBoard = ({}: Props) => {
   );
   const deleteBoardIsVisble = useSelector(
     (state: RootThemeState) => state.ui.deleteBoard
+  );
+  const editBoardIsVisble = useSelector(
+    (state: RootThemeState) => state.ui.editBoard
   );
   const colors = ["#49C4E5", "#8471F2", "#67E2AE", "#f084f0"];
   console.log(boardState);
@@ -84,7 +88,7 @@ const KanbanBoard = ({}: Props) => {
                   >
                     <p className="font-semibold text-[1.1rem]">{task.title}</p>
 
-                    {task.subtasks.length === 0 ? (
+                    {task?.subtasks.length === 0 ? (
                       <p className="text-[#828FA3] italic font-medium">
                         No Subtasks
                       </p>
@@ -102,14 +106,16 @@ const KanbanBoard = ({}: Props) => {
               </div>
             );
           })}
-          {boardState[activeBoardIndex]?.columns.length !== 0 ||
-            (boardState.length !== 0 && (
-              <div className="bg-[#828fa332] h-[33rem] w-[18rem] rounded-lg mt-[2.5rem] grid place-items-center group cursor-pointer">
-                <p className="text-[#828FA3] text-[1.4rem] font-semibold group-hover:text-[#635FC7] duration-200">
-                  + New Column
-                </p>
-              </div>
-            ))}
+          {boardState.length !== 0 && (
+            <div
+              onClick={() => dispatch(toogleEditBoardModal(true))}
+              className="bg-[#828fa332] h-[33rem] w-[18rem] rounded-lg mt-[2.5rem] grid place-items-center group cursor-pointer"
+            >
+              <p className="text-[#828FA3] text-[1.4rem] font-semibold group-hover:text-[#635FC7] duration-200">
+                + New Column
+              </p>
+            </div>
+          )}
         </div>
         {viewTaskIsVisble && <ViewTask />}
         {addTaskIsVisble && <AddTask />}
@@ -117,6 +123,7 @@ const KanbanBoard = ({}: Props) => {
         {editTaskIsVisble && <EditTask />}
         {addBoardIsVisble && <AddBoard />}
         {deleteBoardIsVisble && <DeleteBoard />}
+        {editBoardIsVisble && <EditBoard />}
         {boardState[activeBoardIndex]?.columns.length === 0 ||
           (boardState.length === 0 && <EmptyBoard />)}
       </div>
