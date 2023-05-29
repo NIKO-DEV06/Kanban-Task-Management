@@ -31,6 +31,7 @@ const initialState: RootState = {
   activeBoardIndex: 0,
   activeColumn: null,
   activeTask: null,
+  dragState: initialBoardState,
 };
 
 const boardSlice = createSlice({

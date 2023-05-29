@@ -41,7 +41,7 @@ const Sidebar = ({}: Props) => {
             <p className="uppercase mt-[7.5rem] text-[#828FA3] tracking-[0.2em] text-[0.85rem] font-[500] ml-[3rem] mb-[1rem] ">
               {`All boards (${boardState?.length})`}
             </p>
-            <div className="flex flex-col gap-[0.5rem]">
+            <div className="flex flex-col gap[0.5rem]">
               {boardState.map((bName, index) => (
                 <div
                   key={bName.id}

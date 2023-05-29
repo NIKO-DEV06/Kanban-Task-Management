@@ -29,20 +29,24 @@ const ViewTask = ({}: Props) => {
   const activeTask = useSelector((state: State) => state.board.activeTask);
 
   const handleCheckboxChange = (subtaskId: number, isChecked: boolean) => {
-    const updatedSubtasks = activeTask?.subtasks.map((subtask) =>
-      subtask.id === subtaskId
-        ? { ...subtask, isCompleted: isChecked }
-        : subtask
-    );
+    const updatedSubtasks = activeTask?.subtasks.map((subtask) => {
+      if (subtask.id === subtaskId) {
+        return {
+          ...subtask,
+          isCompleted: isChecked,
+        };
+      }
+      return subtask;
+    });
 
-    dispatch(
-      updateTask({
-        id: activeTask?.id || 0,
-        title: activeTask?.title || "",
-        description: activeTask?.description || "",
+    if (activeTask) {
+      const updatedTask = {
+        ...activeTask,
         subtasks: updatedSubtasks || [],
-      })
-    );
+      };
+
+      dispatch(updateTask(updatedTask));
+    }
   };
 
   return (

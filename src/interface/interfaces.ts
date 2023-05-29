@@ -21,6 +21,7 @@ export interface RootState {
   activeBoardIndex: number;
   activeColumn?: number | null;
   activeTask?: Task | null;
+  dragState: Board[];
 }
 
 export interface Board {
@@ -46,6 +47,14 @@ export interface Subtask {
   id: number;
   title: string;
   isCompleted: boolean;
+}
+
+export interface DND {
+  dragIndex: number;
+  dropIndex: number;
+  dragStatus: string;
+  dropStatus: string;
+  draggableId: string;
 }
 
 export type State = ReturnType<typeof store.getState>;
