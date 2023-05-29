@@ -125,7 +125,7 @@ const KanbanBoard = ({}: Props) => {
                       )}
                       {column.tasks.map((task, index) => (
                         <Draggable
-                          key={task.id.toString()}
+                          key={task.id}
                           draggableId={task.id.toString()}
                           index={index}
                         >
