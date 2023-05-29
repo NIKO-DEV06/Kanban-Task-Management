@@ -143,7 +143,7 @@ const KanbanBoard = ({}: Props) => {
                                   dispatch(setActiveColumn(colId));
                                   dispatch(toogleViewTaskModal(true));
                                 }}
-                                className="bg-white group px-[1.7rem] py-[1.5rem] w-[20rem] flex flex-col gap-[0.3rem] mt-[1rem] rounded-lg shadow-input-shadow md:hover:opacity-60 duration-200  md:hover:scale-95"
+                                className="bg-white dark:text-white dark:bg-[#2B2C37] group px-[1.7rem] py-[1.5rem] w-[20rem] flex flex-col gap-[0.3rem] mt-[1rem] rounded-lg shadow-input-shadow dark:shadow-input-shadow-dark md:hover:opacity-60 dark:md:hover:opacity-80 duration-200  md:hover:scale-95"
                               >
                                 <p className="font-semibold group-hover:text-[#635FC7] text-[1.1rem]">
                                   {task.title}
@@ -176,7 +176,7 @@ const KanbanBoard = ({}: Props) => {
             {boardState.length !== 0 && (
               <div
                 onClick={() => dispatch(toogleEditBoardModal(true))}
-                className="bg-[#828fa332] h-[33rem] w-[18rem] rounded-lg mt-[2.5rem] grid place-items-center group cursor-pointer"
+                className="bg-[#828fa332] dark:bg-[#68728213] h-[33rem] w-[18rem] rounded-lg mt-[2.5rem] grid place-items-center group cursor-pointer"
               >
                 <p className="text-[#828FA3] text-[1.4rem] font-semibold group-hover:text-[#635FC7] duration-200">
                   + New Column

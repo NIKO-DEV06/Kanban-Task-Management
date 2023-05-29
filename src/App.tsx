@@ -5,7 +5,7 @@ import Sidebar from "./components/Sidebar";
 
 function App() {
   return (
-    <main className="bg-[#F4F7FD]">
+    <main className="bg-[#F4F7FD] dark:bg-[#20212C]">
       <MobileHeader />
       <Header />
       <Sidebar />

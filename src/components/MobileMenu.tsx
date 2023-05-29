@@ -25,7 +25,7 @@ const MobileMenu = ({}: Props) => {
 
   return (
     <>
-      <div className="fixed bg-white z-40 mt-[27rem] pb-[1.5rem] rounded-lg pr-[1.5rem] translate-x-[15%]">
+      <div className="fixed bg-white dark:bg-[#2B2C37] z-40 mt-[27rem] pb-[1.5rem] rounded-lg pr-[1.5rem] translate-x-[15%]">
         <p className="uppercase mt-[1rem] text-[#828FA3] tracking-[0.2em] text-[0.85rem] font-[500] ml-[3rem] mb-[1rem] ">
           {`All boards (${boardState?.length})`}
         </p>
@@ -39,7 +39,7 @@ const MobileMenu = ({}: Props) => {
               className={
                 activeBoardIndex === index
                   ? "flex gap-[1rem] items-center bg-[#635FC7] pl-[3rem] py-[0.8rem] rounded-r-full w-[17rem] cursor-pointer"
-                  : "flex gap-[1rem] items-center bg-white pl-[3rem] py-[0.8rem] rounded-r-full w-[17rem] duration-200 "
+                  : "flex gap-[1rem] items-center bg-white dark:bg-[#2B2C37] pl-[3rem] py-[0.8rem] rounded-r-full w-[17rem] duration-200 "
               }
             >
               <img
@@ -76,7 +76,7 @@ const MobileMenu = ({}: Props) => {
             <p className="font-semibold text-[#635FC7]">Create New Board</p>
           </div>
         </div>
-        <div className="flex justify-center items-center gap-[1rem] bg-[#ebeef4] mx-[3rem] py-[0.5rem] rounded-md mt-[2rem] cursor-pointer">
+        <div className="flex justify-center items-center gap-[1rem] bg-[#ebeef4] dark:bg-[#20212C] mx-[3rem] py-[0.5rem] rounded-md mt-[2rem] cursor-pointer">
           <img src={moon} alt="sun" />
           <button
             onClick={() => dispatch(toggleTheme())}

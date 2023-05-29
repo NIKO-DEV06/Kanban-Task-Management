@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import board from "../assets/icon-board.svg";
 import pboard from "../assets/purple-board.svg";
 import padd from "../assets/purple-add.svg";
@@ -25,12 +26,27 @@ const Sidebar = ({}: Props) => {
   const activeBoardIndex = useSelector(
     (state: State) => state.board.activeBoardIndex
   );
+  useEffect(() => {
+    if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+      themeState;
+    } else {
+      !themeState;
+    }
+  }, []);
+
+  useEffect(() => {
+    if (themeState) {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  }, [themeState]);
 
   return (
     <>
       <div className="flex">
         <div
-          className={`hidden bg-white md:flex flex-col justify-between fixed w-[19rem] inset-y-0 overflow-y-auto border-r border-[#E4EBFA] z-10 ${
+          className={`hidden bg-white dark:bg-[#2B2C37] md:flex flex-col justify-between fixed w-[19rem] inset-y-0 overflow-y-auto border-r border-[#E4EBFA] dark:border-[#3E3F4E] z-10 ${
             sidebarState
               ? "transform translate-x-0 transition-all duration-500"
               : "transform translate-x-[-100%] transition-all duration-500"
@@ -49,7 +65,7 @@ const Sidebar = ({}: Props) => {
                   className={
                     activeBoardIndex === index
                       ? "flex gap-[1rem] items-center bg-[#635FC7] pl-[3rem] py-[0.8rem] rounded-r-full w-[17rem] cursor-pointer"
-                      : "group flex gap-[1rem] items-center bg-white hover:bg-[#A8A4FF] pl-[3rem] py-[0.8rem] rounded-r-full w-[17rem] duration-200 cursor-pointer"
+                      : "group flex gap-[1rem] items-center bg-white dark:bg-[#2B2C37] dark:hover:bg-[#545185] pl-[3rem] py-[0.8rem] rounded-r-full w-[17rem] duration-200 cursor-pointer"
                   }
                 >
                   <img
@@ -90,7 +106,7 @@ const Sidebar = ({}: Props) => {
           </div>
           <div className="py-[1.5rem]">
             {" "}
-            <div className="flex justify-center items-center gap-[1rem] bg-[#ebeef4] mx-[3rem] py-[0.5rem] rounded-md mt[18rem] cursor-pointer">
+            <div className="flex justify-center items-center gap-[1rem] bg-[#ebeef4] dark:bg-[#20212C] mx-[3rem] py-[0.5rem] rounded-md mt[18rem] cursor-pointer">
               <img src={moon} alt="sun" />
               <button
                 onClick={() => dispatch(toggleTheme())}

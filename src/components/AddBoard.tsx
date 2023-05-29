@@ -107,11 +107,11 @@ const AddBoard = () => {
       >
         <form
           onSubmit={handleSubmit(addBoard)}
-          className="bg-white w-[24rem] md:w-[32rem] rounded-lg p-[2rem] z-30 overflow-scroll pointer-events-auto"
+          className="bg-white dark:bg-[#2B2C37] dark:text-white w-[24rem] md:w-[32rem] rounded-lg p-[2rem] z-30 overflow-scroll pointer-events-auto"
         >
           <h1 className="font-[600] text-[1.2rem]">Add New Board</h1>
           <div className="relative">
-            <p className="text-[#828FA3] text-[0.9rem] font-[500] mt-[1rem] mb-[0.5rem]">
+            <p className="text-[#828FA3] dark:text-white text-[0.9rem] font-[500] mt-[1rem] mb-[0.5rem]">
               Board Name
             </p>
 
@@ -119,10 +119,10 @@ const AddBoard = () => {
               {...register("boardName")}
               name="boardName"
               placeholder="e.g. Web Design"
-              className={` outline-none border-[2px] indent-4 h-[3rem] w-full rounded-md appearance-none text-[0.95rem]  ${
+              className={` outline-none border-[2px] dark:bg-[#2B2C37] indent-4 h-[3rem] w-full rounded-md appearance-none text-[0.95rem]  ${
                 errors.boardName || duplicateBoardName
                   ? "focus:border-[#ea5555] border-[#ea5555]"
-                  : "focus:border-[#635FC7] border-[#00011241]"
+                  : "focus:border-[#635FC7] border-[#00011241] dark:border-[#3E3F4E]"
               }`}
               type="text"
             />
@@ -136,7 +136,7 @@ const AddBoard = () => {
             )}
           </div>
           <div>
-            <p className="text-[#828FA3] text-[0.9rem] font-[500] mt-[1.2rem] mb-[0.5rem]">
+            <p className="text-[#828FA3] dark:text-white text-[0.9rem] font-[500] mt-[1.2rem] mb-[0.5rem]">
               Board Columns
             </p>
             <div className="flex flex-col gap-[0.5rem] max-h-[5rem] overflow-scroll">
@@ -151,10 +151,10 @@ const AddBoard = () => {
                     })}
                     type="text"
                     placeholder=""
-                    className={`outline-none border-[2px] indent-4 h-[3rem] w-full rounded-md appearance-none text-[0.95rem] ${
+                    className={`outline-none border-[2px] dark:bg-[#2B2C37] indent-4 h-[3rem] w-full rounded-md appearance-none text-[0.95rem] ${
                       errors.boardCols && errors.boardCols[index]
                         ? "focus:border-[#ea5555] border-[#ea5555]"
-                        : "focus:border-[#635FC7] border-[#00011241]"
+                        : "focus:border-[#635FC7] border-[#00011241] dark:border-[#3E3F4E]"
                     }`}
                     value={columns[index].name}
                     onChange={(e) => handleChangeColumn(index, e.target.value)}
@@ -182,7 +182,7 @@ const AddBoard = () => {
           </div>
           <div
             onClick={addColumn}
-            className="bg-[#625fc72a] flex justify-center rounded-full py-[0.9rem] mt-[1rem] gap-[0.5rem] items-center cursor-pointer"
+            className="bg-[#625fc72a] dark:bg-white flex justify-center rounded-full py-[0.9rem] mt-[1rem] gap-[0.5rem] items-center cursor-pointer"
           >
             <img src={add} alt="addSvg" className="h-[0.65rem] w-[0.65rem]" />
             <p className="text-[#635FC7] font-semibold">Add New Column</p>

@@ -30,12 +30,12 @@ const MobileHeader = ({}: Props) => {
     (state: RootThemeState) => state.ui.mobileMenu
   );
   return (
-    <header className="fixed z-20 flex justify-between items-center w-full h-[6rem] p-[1.5rem] md:hidden bg-white border-b border-[#E4EBFA]">
+    <header className="fixed z-20 flex justify-between items-center w-full h-[6rem] p-[1.5rem] md:hidden bg-white dark:bg-[#2B2C37] border-b dark:border-[#3E3F4E] border-[#E4EBFA]">
       <div className="flex gap-[1rem] items-center">
         <img src={logoLight} alt="logo" className="h-[1.6rem]" />
         <h1
           onClick={() => dispatch(toggleMobileMenu(true))}
-          className="text-[1.5rem] font-semibold"
+          className="text-[1.5rem] font-semibold dark:text-white"
         >
           {boardState[activeBoardIndex]?.name}
         </h1>
@@ -61,7 +61,7 @@ const MobileHeader = ({}: Props) => {
             onClick={toggleEditDelete}
           />
           {editDeleteModal && (
-            <div className="absolute bg-white right-[1rem] w-[12rem] top-[5.5rem] pl-[1rem] py-[1rem] flex flex-col gap-[1rem] rounded-lg shadow-input-shadow">
+            <div className="absolute bg-white dark:bg-[#20212C] dark:shadow-input-shadow-dark right-[1rem] w-[12rem] top-[5.5rem] pl-[1rem] py-[1rem] flex flex-col gap-[1rem] rounded-lg shadow-input-shadow">
               <p
                 onClick={() => {
                   setEditDeleteModal(false);

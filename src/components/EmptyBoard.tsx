@@ -1,7 +1,7 @@
 import add from "../assets/icon-add-task-mobile.svg";
 import { useSelector, useDispatch } from "react-redux";
 import { RootThemeState, State } from "../interface/interfaces";
-import { toogleAddBoardModal } from "../store/UiSlice";
+import { toogleAddBoardModal, toogleEditBoardModal } from "../store/UiSlice";
 
 type Props = {};
 
@@ -25,7 +25,11 @@ const EmptyBoard = ({}: Props) => {
           : " This board is empty. Create a new column to get started."}
       </h1>
       <button
-        onClick={() => dispatch(toogleAddBoardModal(true))}
+        onClick={() =>
+          boardState.length === 0
+            ? dispatch(toogleAddBoardModal(true))
+            : dispatch(toogleEditBoardModal(true))
+        }
         className="bg-[#635FC7] hover:bg-[#A8A4FF] duration-200 flex justify-center items-center gap-[0.5rem] w-[13rem] h-[4rem] rounded-full"
       >
         <div>

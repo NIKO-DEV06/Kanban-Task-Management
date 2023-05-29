@@ -58,9 +58,11 @@ const ViewTask = ({}: Props) => {
             : "translate-x-[-1.5rem]"
         }`}
       >
-        <div className="bg-white fixed md:absolute w-[25rem] md:w-[30rem] pt-[2rem] pb-[2.5rem] rounded-lg z-30 overflow-scroll">
+        <div className="bg-white dark:bg-[#2B2C37] fixed md:absolute w-[25rem] md:w-[30rem] pt-[2rem] pb-[2.5rem] rounded-lg z-30 overflow-scroll">
           <div className="flex justify-between mx-[1.5rem] items-center gap-[1rem]">
-            <h2 className="font-bold text-[1.2rem]">{activeTask?.title}</h2>
+            <h2 className="font-bold text-[1.2rem] dark:text-white">
+              {activeTask?.title}
+            </h2>
             <div
               onClick={toggleEditDelete}
               className="hover:bg-[#828fa349] w-[1.2rem] h-[2.5rem] flex justify-center items-center rounded-t-full rounded-b-full duration-200 cursor-pointer"
@@ -68,7 +70,7 @@ const ViewTask = ({}: Props) => {
               <img src={options} alt="ellipse" className="h-[1.5rem]" />
             </div>
             {editDeleteModal && (
-              <div className="absolute bg-white right-[1rem] w-[12rem] top-[4.7rem] pl-[1rem] py-[1rem] flex flex-col gap-[1rem] rounded-lg shadow-input-shadow">
+              <div className="absolute bg-white dark:bg-[#20212C] dark:shadow-input-shadow-dark right-[1rem] w-[12rem] top-[4.7rem] pl-[1rem] py-[1rem] flex flex-col gap-[1rem] rounded-lg shadow-input-shadow">
                 <p
                   onClick={() => {
                     setEditDeleteModal(false);
@@ -107,7 +109,7 @@ const ViewTask = ({}: Props) => {
             {activeTask?.subtasks.map((subtask) => (
               <p
                 key={subtask.id}
-                className="flex items-center px-[1rem] py-[0.5rem] mx-[1.5rem] gap-[1rem] bg-[#F4F7FD] hover:bg-[#625fc752] duration-200 rounded-lg mb-[1rem]"
+                className="flex items-center px-[1rem] py-[0.5rem] mx-[1.5rem] gap-[1rem] dark:text-white bg-[#F4F7FD] dark:bg-[#20212C] hover:bg-[#625fc752] duration-200 rounded-lg mb-[1rem]"
               >
                 <input
                   defaultChecked={subtask.isCompleted}
@@ -115,9 +117,9 @@ const ViewTask = ({}: Props) => {
                     handleCheckboxChange(subtask.id, event.target.checked)
                   }
                   type="checkbox"
-                  className="peer cursor-pointer checked:bg-[#635FC7] appearance-none min-w-[1.2rem] h-[1.2rem] bg-white border-[1.5px] border-[#828fa351] rounded-sm relative after:content-[''] after:w-full after:h-full after:absolute after:left-0 after:top-0 after:bg-no-repeat after:bg-center after:bg-[length:12px] after:bg-[url('.././src/assets/icon-check.svg')] after:opacity-0 after:checked:opacity-100"
+                  className="peer cursor-pointer dark:bg-[#2b2c37] checked:bg-[#635FC7] dark:checked:bg-[#635FC7] appearance-none min-w-[1.2rem] h-[1.2rem] bg-white border-[1.5px] border-[#828fa351] rounded-sm relative after:content-[''] after:w-full after:h-full after:absolute after:left-0 after:top-0 after:bg-no-repeat after:bg-center after:bg-[length:12px] after:bg-[url('.././src/assets/icon-check.svg')] after:opacity-0 after:checked:opacity-100"
                 />
-                <span className="pr-[3rem] font-semibold peer-checked:line-through peer-checked:text-[#00011278] text-[0.95rem]">
+                <span className="pr-[3rem] font-semibold peer-checked:line-through peer-checked:text-[#00011278] dark:peer-checked:text-[#ffffff75] text-[0.95rem]">
                   {subtask.title}
                 </span>
               </p>
@@ -131,7 +133,7 @@ const ViewTask = ({}: Props) => {
             Current Status
           </p>
           <div className="relative w-full grid place-items-center md:place-items-start">
-            <div className="appearance-none bg-white flex items-center border-2 mx-[1.5rem] w-[20rem] md:w-[27rem] border-[#625fc758] text-[1.1rem] rounded-lg mt-[0.7rem] px-[1rem] py-[0.7rem] justify-center font-semibold">
+            <div className="appearance-none bg-white dark:bg-[#2B2C37] dark:text-white flex items-center border-2 mx-[1.5rem] w-[20rem] md:w-[27rem] border-[#625fc758] text-[1.1rem] rounded-lg mt-[0.7rem] px-[1rem] py-[0.7rem] justify-center font-semibold">
               {
                 boardState[activeBoardIndex].columns.find(
                   (col) => col.id === activeColumnId

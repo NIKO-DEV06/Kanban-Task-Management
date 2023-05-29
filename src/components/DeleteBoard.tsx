@@ -15,7 +15,7 @@ const DeleteBoard = () => {
     <>
       <div className="fixed z-30 w-screen flex justify-center pointer-events-none">
         <div
-          className={`pointer-events-auto bg-white flex flex-col gap-[1.5rem] mx-[1.5rem] rounded-lg py-[2rem] px-[2rem] translate-y-[5.5rem] ${
+          className={`pointer-events-auto bg-white dark:bg-[#2B2C37] flex flex-col gap-[1.5rem] mx-[1.5rem] rounded-lg py-[2rem] px-[2rem] translate-y-[5.5rem] ${
             sidebarState
               ? "translate-x-[-1.4rem] md:translate-x-[-20rem]"
               : "translate-x-[-1.4rem] md:translate-x-[-3rem]"

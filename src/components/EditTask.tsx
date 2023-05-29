@@ -156,12 +156,12 @@ const EditTask = ({}: Props) => {
       >
         <form
           onSubmit={handleSubmit(submitEditTaskForm)}
-          className="bg-white fixed md:absolute w-[25rem] md:w-[30rem] pt-[2rem] pb-[1rem] rounded-lg z-30 overflow-scroll px-[1.65rem] h-[43rem] md:h-[42rem] scale-90 md:scale-95"
+          className="bg-white dark:bg-[#2B2C37] dark:text-white fixed md:absolute w-[25rem] md:w-[30rem] pt-[2rem] pb-[1rem] rounded-lg z-30 overflow-scroll px-[1.65rem] h-[43rem] md:h-[42rem] scale-90 md:scale-95"
         >
           <h1 className="font-[600] text-[1.25rem]">Edit Task</h1>
           <div className="flex flex-col gap-[0.7rem]">
             <div>
-              <p className="text-[#828FA3] text-[1rem] font-[500] mt-[1.2rem] mb-[0.5rem]">
+              <p className="text-[#828FA3] dark:text-white text-[1rem] font-[500] mt-[1.2rem] mb-[0.5rem]">
                 Title
               </p>
               <input
@@ -169,10 +169,10 @@ const EditTask = ({}: Props) => {
                 name="title"
                 type="text"
                 placeholder="e.g. Take coffee break"
-                className={`outline-none border-[2px] ${
+                className={`outline-none dark:bg-[#2B2C37] border-[2px] ${
                   errors.title || duplicateTaskState
                     ? "focus:border-[#ea5555] border-[#ea5555]"
-                    : "focus:border-[#635FC7] border-[#00011241]"
+                    : "focus:border-[#635FC7] border-[#00011241] dark:border-[#3E3F4E]"
                 }  indent-4 h-[3rem] w-full rounded-md appearance-none text-[0.95rem]`}
                 defaultValue={defaultTitle}
               />
@@ -187,7 +187,7 @@ const EditTask = ({}: Props) => {
               )}
             </div>
             <div>
-              <p className="text-[#828FA3] text-[1rem] font-[500] mb-[0.5rem]">
+              <p className="text-[#828FA3] dark:text-white text-[1rem] font-[500] mb-[0.5rem]">
                 Description
               </p>
               <textarea
@@ -197,10 +197,10 @@ const EditTask = ({}: Props) => {
                 rows={10}
                 autoComplete="off"
                 placeholder="e.g. It's always good to take a break. This 15 minute break will recharge the batteries a little."
-                className={`outline-none border-[2px]  ${
+                className={`outline-none dark:bg-[#2B2C37] border-[2px]  ${
                   errors.description
                     ? "focus:border-[#ea5555] border-[#ea5555]"
-                    : "focus:border-[#635FC7] border-[#00011241]"
+                    : "focus:border-[#635FC7] border-[#00011241] dark:border-[#3E3F4E]"
                 } px-4 h-[7rem] pt-3 w-full rounded-md appearance-none text-[0.95rem] resize-none`}
                 defaultValue={defaultDescription}
               />
@@ -209,7 +209,7 @@ const EditTask = ({}: Props) => {
               </p>
             </div>
             <div>
-              <p className="text-[#828FA3] text-[1rem] font-[500] mb-[0.5rem]">
+              <p className="text-[#828FA3] dark:text-white text-[1rem] font-[500] mb-[0.5rem]">
                 Subtasks
               </p>
               <div className="max-h-[8rem] overflow-scroll flex flex-col gap-[0.5rem]">
@@ -224,10 +224,10 @@ const EditTask = ({}: Props) => {
                       })}
                       type="text"
                       placeholder=""
-                      className={`outline-none border-[2px] ${
+                      className={`outline-none dark:bg-[#2B2C37] border-[2px] ${
                         errors.subtasks && errors.subtasks[index]
                           ? "focus:border-[#ea5555] border-[#ea5555]"
-                          : "focus:border-[#635FC7] border-[#00011241]"
+                          : "focus:border-[#635FC7] border-[#00011241] dark:border-[#3E3F4E]"
                       } indent-4 h-[3rem] w-full rounded-md appearance-none text-[0.95rem]`}
                       defaultValue={subtask.name}
                       onChange={(e) =>
@@ -256,13 +256,13 @@ const EditTask = ({}: Props) => {
           </div>
           <div
             onClick={addSubtask}
-            className="bg-[#625fc72a] flex justify-center rounded-full py-[0.9rem] mt-[1rem] gap-[0.5rem] items-center cursor-pointer"
+            className="bg-[#625fc72a] dark:bg-white flex justify-center rounded-full py-[0.9rem] mt-[1rem] gap-[0.5rem] items-center cursor-pointer"
           >
             <img src={add} alt="addSvg" className="h-[0.65rem] w-[0.65rem]" />
             <p className="text-[#635FC7] font-semibold">Add New Subtask</p>
           </div>
           <div className="mt-[1.5rem]">
-            <p className="text-[#828FA3] text-[1rem] font-[500] mb-[0.5rem]">
+            <p className="text-[#828FA3] dark:text-white text-[1rem] font-[500] mb-[0.5rem]">
               Status
             </p>
 
@@ -270,7 +270,7 @@ const EditTask = ({}: Props) => {
               <select
                 id="dropdown"
                 name="services"
-                className="cursor-pointer bg-white font-[500] text-[#656161] w-full border-2 outline-none py-3 px-[1.5rem] appearance-none rounded-md"
+                className="cursor-pointer bg-white font-[500] text-[#656161] dark:text-white dark:bg-[#2B2C37] w-full border-2 dark:border-[#3E3F4E] outline-none py-3 px-[1.5rem] appearance-none rounded-md"
                 value={status}
                 onChange={handleStatusChange}
               >
