@@ -1,6 +1,10 @@
 import { useSelector, useDispatch } from "react-redux";
 import { RootThemeState, State } from "../interface/interfaces";
-import { viewTask, setActiveColumn } from "../store/BoardSlice";
+import {
+  viewTask,
+  setActiveColumn,
+  updateTaskPosition,
+} from "../store/BoardSlice";
 import { toogleViewTaskModal, toogleEditBoardModal } from "../store/UiSlice";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import ViewTask from "./ViewTask";
@@ -45,7 +49,41 @@ const KanbanBoard = ({}: Props) => {
   );
   const colors = ["#49C4E5", "#8471F2", "#67E2AE", "#f084f0"];
 
-  const onDragEnd = () => {};
+  const onDragEnd = (result: any) => {
+    const { destination, source } = result;
+
+    // Check if the drag operation was dropped outside a droppable area
+    if (!destination) {
+      return;
+    }
+
+    // Check if the task was dropped in a different position
+    if (
+      destination.droppableId === source.droppableId &&
+      destination.index === source.index
+    ) {
+      return;
+    }
+
+    const sourceColumnId = parseInt(
+      source.droppableId.replace("kanbanboard-", "")
+    );
+    const destinationColumnId = parseInt(
+      destination.droppableId.replace("kanbanboard-", "")
+    );
+    const sourceIndex = source.index;
+    const destinationIndex = destination.index;
+
+    // Dispatch an action to update the task position in the board state
+    dispatch(
+      updateTaskPosition({
+        sourceColumnId,
+        destinationColumnId,
+        sourceIndex,
+        destinationIndex,
+      })
+    );
+  };
 
   return (
     <>
