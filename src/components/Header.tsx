@@ -10,9 +10,7 @@ import {
   toogleEditBoardModal,
 } from "../store/UiSlice";
 
-type Props = {};
-
-const Header = ({}: Props) => {
+const Header = () => {
   const dispatch = useDispatch();
   const boardState = useSelector((state: State) => state.board.boards);
   const activeBoardIndex = useSelector(

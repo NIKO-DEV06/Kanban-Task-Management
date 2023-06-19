@@ -16,9 +16,7 @@ import { State } from "../interface/interfaces";
 import Board from "./Board";
 import { setActiveBoard } from "../store/BoardSlice";
 
-type Props = {};
-
-const Sidebar = ({}: Props) => {
+const Sidebar = () => {
   const dispatch = useDispatch();
   const themeState = useSelector((state: RootThemeState) => state.ui.theme);
   const sidebarState = useSelector((state: RootThemeState) => state.ui.sidebar);
@@ -65,7 +63,7 @@ const Sidebar = ({}: Props) => {
                   className={
                     activeBoardIndex === index
                       ? "flex gap-[1rem] items-center bg-[#635FC7] pl-[3rem] py-[0.8rem] rounded-r-full w-[17rem] cursor-pointer"
-                      : "group flex gap-[1rem] items-center bg-white dark:bg-[#2B2C37] dark:hover:bg-[#545185] pl-[3rem] py-[0.8rem] rounded-r-full w-[17rem] duration-200 cursor-pointer"
+                      : "group flex gap-[1rem] items-center bg-white dark:bg-[#2B2C37] hover:bg-[#aba7ff] dark:hover:bg-[#545185] pl-[3rem] py-[0.8rem] rounded-r-full w-[17rem] duration-200 cursor-pointer"
                   }
                 >
                   <img

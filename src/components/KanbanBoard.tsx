@@ -17,9 +17,7 @@ import DeleteBoard from "./DeleteBoard";
 import EmptyBoard from "./EmptyBoard";
 import EditBoard from "./EditBoard";
 
-type Props = {};
-
-const KanbanBoard = ({}: Props) => {
+const KanbanBoard = () => {
   const dispatch = useDispatch();
   const sidebarState = useSelector((state: RootThemeState) => state.ui.sidebar);
   const boardState = useSelector((state: State) => state.board.boards);

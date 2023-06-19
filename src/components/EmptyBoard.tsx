@@ -3,9 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootThemeState, State } from "../interface/interfaces";
 import { toogleAddBoardModal, toogleEditBoardModal } from "../store/UiSlice";
 
-type Props = {};
-
-const EmptyBoard = ({}: Props) => {
+const EmptyBoard = () => {
   const dispatch = useDispatch();
   const boardState = useSelector((state: State) => state.board.boards);
 

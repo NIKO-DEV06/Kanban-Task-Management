@@ -13,9 +13,7 @@ import {
 } from "../store/UiSlice";
 import { RootThemeState, State } from "../interface/interfaces";
 
-type Props = {};
-
-const MobileHeader = ({}: Props) => {
+const MobileHeader = () => {
   const [editDeleteModal, setEditDeleteModal] = useState(false);
   const toggleEditDelete = () => {
     setEditDeleteModal(!editDeleteModal);

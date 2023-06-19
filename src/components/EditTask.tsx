@@ -12,7 +12,7 @@ import { State } from "../interface/interfaces";
 import { toogleEditTaskModal } from "../store/UiSlice";
 import { editTask } from "../store/BoardSlice";
 
-type Props = {};
+
 
 type Subtasks = {
   id: number;
@@ -24,7 +24,7 @@ type FormValues = {
   subtasks: Subtasks[];
 };
 
-const EditTask = ({}: Props) => {
+const EditTask = () => {
   const dispatch = useDispatch();
   const sidebarState = useSelector((state: RootThemeState) => state.ui.sidebar);
   const boardState = useSelector((state: State) => state.board.boards);
@@ -131,6 +131,7 @@ const EditTask = ({}: Props) => {
     const { title, description } = data;
     const editedTask = {
       description,
+
       id: activeTask?.id!,
       subtasks: subtasks.map((subtask, index) => ({
         id: Math.random(),

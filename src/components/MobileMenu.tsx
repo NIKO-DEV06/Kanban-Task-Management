@@ -13,9 +13,7 @@ import {
 import { setActiveBoard } from "../store/BoardSlice";
 import { RootThemeState, State } from "../interface/interfaces";
 
-type Props = {};
-
-const MobileMenu = ({}: Props) => {
+const MobileMenu = () => {
   const dispatch = useDispatch();
   const themeState = useSelector((state: RootThemeState) => state.ui.theme);
   const boardState = useSelector((state: State) => state.board.boards);

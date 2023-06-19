@@ -12,8 +12,6 @@ import { State } from "../interface/interfaces";
 import { addTask } from "../store/BoardSlice";
 import { toogleAddTaskModal } from "../store/UiSlice";
 
-type Props = {};
-
 type Subtasks = {
   id: number;
   name: string;
@@ -24,7 +22,7 @@ type FormValues = {
   subtasks: Subtasks[];
 };
 
-const AddTask = ({}: Props) => {
+const AddTask = () => {
   const dispatch = useDispatch();
   const sidebarState = useSelector((state: RootThemeState) => state.ui.sidebar);
   const boardState = useSelector((state: State) => state.board.boards);

@@ -9,9 +9,7 @@ import {
 import { updateTask } from "../store/BoardSlice";
 import { useState } from "react";
 
-type Props = {};
-
-const ViewTask = ({}: Props) => {
+const ViewTask = () => {
   const [editDeleteModal, setEditDeleteModal] = useState(false);
   const sidebarState = useSelector((state: RootThemeState) => state.ui.sidebar);
 

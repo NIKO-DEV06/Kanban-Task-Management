@@ -3,9 +3,7 @@ import eye from "../assets/icon-show-sidebar.svg";
 import { toggleSideBar } from "../store/UiSlice";
 import { useDispatch } from "react-redux";
 
-type Props = {};
-
-const Board = ({}: Props) => {
+const Board = () => {
   const dispatch = useDispatch();
 
   return (
